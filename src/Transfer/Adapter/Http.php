@@ -38,7 +38,7 @@ use Zend\ProgressBar;
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class HTTP extends AbstractAdapter
+class Http extends AbstractAdapter
 {
     protected static $_callbackApc            = 'apc_fetch';
     protected static $_callbackUploadProgress = 'uploadprogress_get_info';
@@ -306,10 +306,10 @@ class HTTP extends AbstractAdapter
     public static function getProgress($id = null)
     {
         if (!function_exists('apc_fetch') and !function_exists('uploadprogress_get_info')) {
-            throw new Transfer\Exception('Wether APC nor uploadprogress extension installed');
+            throw new Transfer\Exception('Neither APC nor uploadprogress extension installed');
         }
 
-        $session = 'Zend\File\Transfer\Adapter\HTTP\ProgressBar';
+        $session = 'Zend\File\Transfer\Adapter\Http\ProgressBar';
         $status  = array(
             'total'    => 0,
             'current'  => 0,
