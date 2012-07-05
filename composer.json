@@ -1,6 +1,6 @@
 {
     "name": "zendframework/zend-file",
-    "description": "Zend\\File component",
+    "description": " ",
     "license": "BSD-3-Clause",
     "keywords": [
         "zf2",
@@ -9,11 +9,11 @@
     "homepage": "https://github.com/zendframework/zend-file",
     "autoload": {
         "psr-4": {
-            "Zend\\File\\": "src/"
+            "Zend\\File": "src/"
         }
     },
     "require": {
-        "php": ">=5.3.23",
+        "php": ">=5.3.3",
         "zendframework/zend-stdlib": "self.version"
     },
     "require-dev": {
@@ -27,7 +27,8 @@
     "suggest": {
         "zendframework/zend-filter": "Zend\\Filter component",
         "zendframework/zend-i18n": "Zend\\I18n component",
-        "zendframework/zend-validator": "Zend\\Validator component"
+        "zendframework/zend-validator": "Zend\\Validator component",
+        "zendframework/zend-loader": "Zend\\Loader component"
     },
     "extra": {
         "branch-alias": {
