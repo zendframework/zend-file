@@ -12,26 +12,22 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category  Zend
- * @package   Zend_File_Transfer
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd     New BSD License
- */
-
-/**
- * @namespace
- */
-namespace Zend\File\Transfer;
-
-/**
- * Exception class for Zend_File_Transfer
- *
  * @category   Zend
- * @package    Zend_File_Transfer
+ * @package    Zend_File
+ * @subpackage Exception
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Exception
-{
 
+namespace Zend\File\Exception;
+
+/**
+ * Marker interface for exceptions found in this component
+ * 
+ * @package    Zend_File
+ * @subpackage Exception
+ * @license    New BSD {@link http://framework.zend.com/license/new-bsd}
+ */
+interface ExceptionInterface
+{
 }
