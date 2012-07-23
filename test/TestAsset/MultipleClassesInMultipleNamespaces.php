@@ -8,14 +8,28 @@
  * @package   Zend_File
  */
 
-namespace Zend\File\Exception;
-
-/**
- * Marker interface for exceptions found in this component
- *
- * @package    Zend_File
- * @subpackage Exception
- */
-interface ExceptionInterface
+namespace ZendTest\File\TestAsset
 {
+
+    class LocatorShouldFindFirstClass
+    {
+    }
+
+    class LocatorShouldFindSecondClass
+    {
+    }
+
+}
+
+namespace ZendTest\File\TestAsset\SecondTestNamespace
+{
+
+    class LocatorShouldFindThirdClass
+    {
+    }
+
+    class LocatorShouldFindFourthClass
+    {
+    }
+
 }
