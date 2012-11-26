@@ -9,7 +9,7 @@
     "homepage": "https://github.com/zendframework/zend-file",
     "autoload": {
         "psr-4": {
-            "Zend\\File": "src/"
+            "Zend\\File\\": "src/"
         }
     },
     "require": {
@@ -27,8 +27,7 @@
     "suggest": {
         "zendframework/zend-filter": "Zend\\Filter component",
         "zendframework/zend-i18n": "Zend\\I18n component",
-        "zendframework/zend-validator": "Zend\\Validator component",
-        "zendframework/zend-loader": "Zend\\Loader component"
+        "zendframework/zend-validator": "Zend\\Validator component"
     },
     "extra": {
         "branch-alias": {
