@@ -8,12 +8,28 @@
  * @package   Zend_File
  */
 
-namespace Zend\File\Exception;
+namespace ZendTest\File\TestAsset
+{
 
-/**
- * @category   Zend
- * @package    Zend_File_Transfer
- */
-class BadMethodCallException extends \BadMethodCallException implements
-    ExceptionInterface
-{}
+    class LocatorShouldFindFirstClass
+    {
+    }
+
+    class LocatorShouldFindSecondClass
+    {
+    }
+
+}
+
+namespace ZendTest\File\TestAsset\SecondTestNamespace
+{
+
+    class LocatorShouldFindThirdClass
+    {
+    }
+
+    class LocatorShouldFindFourthClass
+    {
+    }
+
+}
