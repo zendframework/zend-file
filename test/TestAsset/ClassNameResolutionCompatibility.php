@@ -7,10 +7,14 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Zend\File\Transfer\Exception;
+namespace ZendTest\File\TestAsset;
 
-use Zend\File\Exception;
+use stdClass;
 
-class BadMethodCallException extends Exception\BadMethodCallException implements ExceptionInterface
+class ClassNameResolutionCompatibility
 {
+    protected $someClassNames = [
+        stdClass::class,
+        stdClass::class,
+    ];
 }
