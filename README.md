@@ -1,5 +1,8 @@
 # zend-file
 
+[![Build Status](https://secure.travis-ci.org/zendframework/zend-file.svg?branch=master)](https://secure.travis-ci.org/zendframework/zend-file)
+[![Coverage Status](https://coveralls.io/repos/zendframework/zend-file/badge.svg?branch=master)](https://coveralls.io/r/zendframework/zend-file)
+
 `Zend\File` is a component used to manage file transfer and class autoloading.
 
 
