@@ -301,7 +301,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowPullingFiltersByFile()
     {
-        $this->adapter->addFilter('Boolean', 1, 'foo');
+        $this->adapter->addFilter('Boolean', [1], 'foo');
         $filters = $this->adapter->getFilters('foo');
         $this->assertEquals(1, count($filters));
         $filter = array_shift($filters);
