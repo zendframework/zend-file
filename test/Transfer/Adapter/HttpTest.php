@@ -31,11 +31,13 @@ class HttpTest extends \PHPUnit_Framework_TestCase
     {
         $_FILES = [
             'txt' => [
-                'name' => __DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'test.txt',
+                'name' => 'test.txt',
                 'type' => 'plain/text',
                 'size' => 8,
-                'tmp_name' => __DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'test.txt',
-                'error' => 0]];
+                'tmp_name' => __DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'php0zgByO',
+                'error' => 0,
+            ],
+        ];
         $this->adapter = new HttpTestMockAdapter();
     }
 
@@ -52,7 +54,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
     public function testEmptyAdapter()
     {
         $files = $this->adapter->getFileName();
-        $this->assertContains('test.txt', $files);
+        $this->assertContains('php0zgByO_test.txt', $files);
     }
 
     public function testAutoSetUploadValidator()
@@ -117,7 +119,9 @@ class HttpTest extends \PHPUnit_Framework_TestCase
                 'type' => 'plain/text',
                 'size' => 8,
                 'tmp_name' => 'unknown.txt',
-                'error' => 0]];
+                'error' => 0,
+            ],
+        ];
         $adapter = new HttpTestMockAdapter();
         $this->assertFalse($adapter->receive());
     }
@@ -147,34 +151,84 @@ class HttpTest extends \PHPUnit_Framework_TestCase
     {
         $_FILES = [
             'txt' => [
-                'name' => __DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'test.txt',
+                'name' => 'test.txt',
                 'type' => 'plain/text',
                 'size' => 8,
-                'tmp_name' => __DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'test.txt',
-                'error' => 0],
+                'tmp_name' => __DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'php0zgByO',
+                'error' => 0,
+            ],
             'exe' => [
                 'name' => [
-                    0 => __DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'file1.txt',
-                    1 => __DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'file2.txt'],
+                    0 => 'file1.exe',
+                    1 => 'file2.exe',
+                ],
                 'type' => [
                     0 => 'plain/text',
-                    1 => 'plain/text'],
+                    1 => 'plain/text',
+                ],
                 'size' => [
                     0 => 8,
-                    1 => 8],
+                    1 => 8,
+                ],
                 'tmp_name' => [
-                    0 => __DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'file1.txt',
-                    1 => __DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'file2.txt'],
+                    0 => __DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'phpqBXGTg',
+                    1 => __DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'phpZqRDQF',
+                ],
                 'error' => [
                     0 => 0,
-                    1 => 0]]];
+                    1 => 0,
+                ],
+            ],
+        ];
         $adapter = new HttpTestMockAdapter();
         $adapter->setOptions(['ignoreNoFile' => true]);
         $this->assertTrue($adapter->receive('exe'));
-        $this->assertEquals(
-            ['exe_0_' => __DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'file1.txt',
-                  'exe_1_' => __DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'file2.txt'],
-            $adapter->getFileName('exe', false));
+        $this->assertEquals([
+            'exe_0_' => 'phpqBXGTg_file1.exe',
+            'exe_1_' => 'phpZqRDQF_file2.exe',
+        ], $adapter->getFileName('exe', false));
+    }
+
+    public function testMultiFilesSameName()
+    {
+        $_FILES = [
+            'txt' => [
+                'name' => 'test.txt',
+                'type' => 'plain/text',
+                'size' => 8,
+                'tmp_name' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'php0zgByO',
+                'error' => 0,
+            ],
+            'exe' => [
+                'name' => [
+                    0 => 'file.exe',
+                    1 => 'file.exe',
+                ],
+                'type' => [
+                    0 => 'plain/text',
+                    1 => 'plain/text',
+                ],
+                'size' => [
+                    0 => 8,
+                    1 => 8,
+                ],
+                'tmp_name' => [
+                    0 => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'phpOOwDDc',
+                    1 => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'phpDlIxkx',
+                ],
+                'error' => [
+                    0 => 0,
+                    1 => 0,
+                ],
+            ],
+        ];
+        $adapter = new HttpTestMockAdapter();
+        $adapter->setOptions(['ignoreNoFile' => true]);
+        $this->assertTrue($adapter->receive('exe'));
+        $this->assertEquals([
+            'exe_0_' => 'phpOOwDDc_file.exe',
+            'exe_1_' => 'phpDlIxkx_file.exe',
+        ], $adapter->getFileName('exe', false));
     }
 
     public function testNoUploadInProgress()

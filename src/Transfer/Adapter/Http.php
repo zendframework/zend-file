@@ -423,6 +423,9 @@ class Http extends AbstractAdapter
 
                 $this->files[$form]['name'] = $form;
                 foreach ($this->files[$form]['multifiles'] as $key => $value) {
+                    if ($this->files[$value]['tmp_name'] !== '') {
+                        $this->files[$value]['name']  = basename($this->files[$value]['tmp_name']) . '_' .  $this->files[$value]['name'];
+                    }
                     $this->files[$value]['options']   = $this->options;
                     $this->files[$value]['validated'] = false;
                     $this->files[$value]['received']  = false;
@@ -441,6 +444,9 @@ class Http extends AbstractAdapter
                 }
             } else {
                 $this->files[$form]              = $content;
+                if ($this->files[$form]['tmp_name'] !== '') {
+                    $this->files[$form]['name']  = basename($this->files[$form]['tmp_name']) . '_' .  $this->files[$form]['name'];
+                }
                 $this->files[$form]['options']   = $this->options;
                 $this->files[$form]['validated'] = false;
                 $this->files[$form]['received']  = false;
