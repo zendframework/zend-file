@@ -10,6 +10,7 @@
 namespace Zend\File\Transfer\Adapter;
 
 use Zend\Filter\FilterPluginManager as BaseManager;
+use Zend\Filter\File;
 
 /**
  * Plugin manager implementation for the filter chain.
@@ -20,16 +21,19 @@ use Zend\Filter\FilterPluginManager as BaseManager;
  */
 class FilterPluginManager extends BaseManager
 {
-    /**
-     * Default set of filters
-     *
-     * @var array
-     */
-    protected $aliases = [
-        'decrypt'   => 'filedecrypt',
-        'encrypt'   => 'fileencrypt',
-        'lowercase' => 'filelowercase',
-        'rename'    => 'filerename',
-        'uppercase' => 'fileuppercase',
-    ];
+
+    public function __construct($configOrContainerInstance = null, array $v3config = []) 
+    {
+	parent::__construct($configOrContainerInstance, $v3config);
+        
+	$this->aliases = array_merge(array(
+            'decrypt'       => File\Decrypt::class,
+            'encrypt'       => File\Encrypt::class,
+            'lowercase'     => File\LowerCase::class,
+            'rename'        => File\Rename::class,
+            'uppercase'     => File\UpperCase::class
+        ), $this->aliases);
+    }
+
 }
+
