@@ -21,19 +21,26 @@ use Zend\Filter\File;
  */
 class FilterPluginManager extends BaseManager
 {
-
-    public function __construct($configOrContainerInstance = null, array $v3config = []) 
+    /**
+     * Constructor
+     *
+     * Merges default aliases pertinent to this plugin manager with those
+     * defined in the parent filter plugin manager.
+     *
+     * @param null|\Zend\ServiceManager\ConfigInterface|\Interop\Container\ContainerInterface $configOrContainerInstance
+     * @param array $v3config If $configOrContainerInstance is a container, this
+     *     value will be passed to the parent constructor.
+     */
+    public function __construct($configOrContainerInstance = null, array $v3config = [])
     {
-	parent::__construct($configOrContainerInstance, $v3config);
-        
-	$this->aliases = array_merge(array(
+        $this->aliases = array_merge([
             'decrypt'       => File\Decrypt::class,
             'encrypt'       => File\Encrypt::class,
             'lowercase'     => File\LowerCase::class,
             'rename'        => File\Rename::class,
-            'uppercase'     => File\UpperCase::class
-        ), $this->aliases);
+            'uppercase'     => File\UpperCase::class,
+        ], $this->aliases);
+
+        parent::__construct($configOrContainerInstance, $v3config);
     }
-
 }
-

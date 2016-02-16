@@ -18,8 +18,6 @@ use Zend\File\Transfer\Adapter;
  */
 class HttpTestMockAdapter extends Adapter\Http
 {
-    static $aa = true;
-
     public function __construct()
     {
         self::$callbackApc = ['ZendTest\File\Transfer\Adapter\HttpTestMockAdapter', 'apcTest'];
@@ -38,21 +36,30 @@ class HttpTestMockAdapter extends Adapter\Http
 
     public static function isApcAvailable()
     {
-        return static::$aa;
+        return true;
     }
 
     public static function apcTest($id)
     {
-        return ['total' => 100, 'current' => 100, 'rate' => 10];
+        return [
+            'total' => 100,
+            'current' => 100,
+            'rate' => 10,
+        ];
     }
 
     public static function uPTest($id)
     {
-        return ['bytes_total' => 100, 'bytes_uploaded' => 100, 'speed_average' => 10, 'cancel_upload' => true];
+        return [
+            'bytes_total' => 100,
+            'bytes_uploaded' => 100,
+            'speed_average' => 10,
+            'cancel_upload' => true,
+        ];
     }
 
     public function switchApcToUP()
-    {	static::$aa = false;
+    {
         self::$callbackApc = null;
         self::$callbackUploadProgress = ['ZendTest\File\Transfer\Adapter\HttpTestMockAdapter', 'uPTest'];
     }
