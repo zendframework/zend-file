@@ -9,6 +9,7 @@
 
 namespace ZendTest\File\Transfer\Adapter;
 
+use Interop\Container\ContainerInterface;
 use stdClass;
 use Zend\File;
 use Zend\Filter;
@@ -59,7 +60,8 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowSettingFilterPluginManagerInstance()
     {
-        $manager = new File\Transfer\Adapter\FilterPluginManager();
+        $container = $this->prophesize(ContainerInterface::class)->reveal();
+        $manager = new File\Transfer\Adapter\FilterPluginManager($container);
         $this->adapter->setFilterManager($manager);
         $this->assertSame($manager, $this->adapter->getFilterManager());
     }
@@ -408,7 +410,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     public function testAdapterShouldAllowAddingMultipleFiltersAtOnceUsingBothInstancesAndPluginLoader()
     {
         $filters = [
-            'Word\SeparatorToCamelCase' => ['separator' => ' '],
+            'wordSeparatorToCamelCase' => ['separator' => ' '],
             [
                 'filter' => 'Boolean',
                 'casting' => true

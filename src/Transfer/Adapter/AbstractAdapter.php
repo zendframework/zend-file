@@ -10,12 +10,14 @@
 namespace Zend\File\Transfer\Adapter;
 
 use ErrorException;
+use ReflectionClass;
 use Zend\File\Transfer;
 use Zend\File\Transfer\Exception;
 use Zend\Filter;
 use Zend\Filter\Exception as FilterException;
 use Zend\I18n\Translator\TranslatorInterface as Translator;
 use Zend\I18n\Translator\TranslatorAwareInterface;
+use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ErrorHandler;
 use Zend\Validator;
 
@@ -241,7 +243,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
     public function getFilterManager()
     {
         if (!$this->filterManager instanceof FilterPluginManager) {
-            $this->setFilterManager(new FilterPluginManager());
+            $this->setFilterManager(new FilterPluginManager(new ServiceManager()));
         }
         return $this->filterManager;
     }
@@ -266,7 +268,11 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
     public function getValidatorManager()
     {
         if (!$this->validatorManager instanceof ValidatorPluginManager) {
-            $this->setValidatorManager(new ValidatorPluginManager());
+            if ($this->isServiceManagerV3()) {
+                $this->setValidatorManager(new ValidatorPluginManager(new ServiceManager()));
+            } else {
+                $this->setValidatorManager(new ValidatorPluginManager());
+            }
         }
         return $this->validatorManager;
     }
@@ -1505,5 +1511,19 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
         }
 
         return false;
+    }
+
+    /**
+     * Is the service manager component v3?
+     *
+     * This is needed until zend-validator is updated, to ensure we instantiate
+     * the validator plugin manager properly.
+     *
+     * @return bool
+     */
+    private function isServiceManagerV3()
+    {
+        $r = new ReflectionClass(ServiceManager::class);
+        return ! $r->hasProperty('invokableClasses');
     }
 }
