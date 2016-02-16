@@ -412,34 +412,31 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testSettingAndRetrievingOptions()
     {
-        $this->assertEquals(
-            [
-                'bar' => ['ignoreNoFile' => false, 'useByteString' => true],
-                'baz' => ['ignoreNoFile' => false, 'useByteString' => true],
-                'foo' => ['ignoreNoFile' => false, 'useByteString' => true, 'detectInfos' => true],
-                'file_0_' => ['ignoreNoFile' => false, 'useByteString' => true],
-                'file_1_' => ['ignoreNoFile' => false, 'useByteString' => true],
-            ], $this->adapter->getOptions());
+        $this->assertEquals([
+            'bar' => ['ignoreNoFile' => false, 'useByteString' => true],
+            'baz' => ['ignoreNoFile' => false, 'useByteString' => true],
+            'foo' => ['ignoreNoFile' => false, 'useByteString' => true, 'detectInfos' => true],
+            'file_0_' => ['ignoreNoFile' => false, 'useByteString' => true],
+            'file_1_' => ['ignoreNoFile' => false, 'useByteString' => true],
+        ], $this->adapter->getOptions());
 
         $this->adapter->setOptions(['ignoreNoFile' => true]);
-        $this->assertEquals(
-            [
-                'bar' => ['ignoreNoFile' => true, 'useByteString' => true],
-                'baz' => ['ignoreNoFile' => true, 'useByteString' => true],
-                'foo' => ['ignoreNoFile' => true, 'useByteString' => true, 'detectInfos' => true],
-                'file_0_' => ['ignoreNoFile' => true, 'useByteString' => true],
-                'file_1_' => ['ignoreNoFile' => true, 'useByteString' => true],
-            ], $this->adapter->getOptions());
+        $this->assertEquals([
+            'bar' => ['ignoreNoFile' => true, 'useByteString' => true],
+            'baz' => ['ignoreNoFile' => true, 'useByteString' => true],
+            'foo' => ['ignoreNoFile' => true, 'useByteString' => true, 'detectInfos' => true],
+            'file_0_' => ['ignoreNoFile' => true, 'useByteString' => true],
+            'file_1_' => ['ignoreNoFile' => true, 'useByteString' => true],
+        ], $this->adapter->getOptions());
 
         $this->adapter->setOptions(['ignoreNoFile' => false], 'foo');
-        $this->assertEquals(
-            [
-                'bar' => ['ignoreNoFile' => true, 'useByteString' => true],
-                'baz' => ['ignoreNoFile' => true, 'useByteString' => true],
-                'foo' => ['ignoreNoFile' => false, 'useByteString' => true, 'detectInfos' => true],
-                'file_0_' => ['ignoreNoFile' => true, 'useByteString' => true],
-                'file_1_' => ['ignoreNoFile' => true, 'useByteString' => true],
-            ], $this->adapter->getOptions());
+        $this->assertEquals([
+            'bar' => ['ignoreNoFile' => true, 'useByteString' => true],
+            'baz' => ['ignoreNoFile' => true, 'useByteString' => true],
+            'foo' => ['ignoreNoFile' => false, 'useByteString' => true, 'detectInfos' => true],
+            'file_0_' => ['ignoreNoFile' => true, 'useByteString' => true],
+            'file_1_' => ['ignoreNoFile' => true, 'useByteString' => true],
+        ], $this->adapter->getOptions());
     }
 
     public function testGetAllAdditionalFileInfos()
@@ -601,10 +598,9 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     public function testSettingMagicFile()
     {
         $this->adapter->setOptions(['magicFile' => 'test/file']);
-        $this->assertEquals(
-            [
-                'bar' => ['magicFile' => 'test/file', 'ignoreNoFile' => false, 'useByteString' => true],
-            ], $this->adapter->getOptions('bar'));
+        $this->assertEquals([
+            'bar' => ['magicFile' => 'test/file', 'ignoreNoFile' => false, 'useByteString' => true],
+        ], $this->adapter->getOptions('bar'));
     }
 
     /**

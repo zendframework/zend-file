@@ -710,6 +710,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
     public function addFilter($filter, $options = null, $files = null)
     {
         if (is_string($filter)) {
+            $options = (null !== $options && is_scalar($options)) ? [$options] : $options;
             $filter = $this->getFilterManager()->get($filter, $options);
         }
 
