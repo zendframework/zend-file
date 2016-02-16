@@ -59,6 +59,13 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 
     public function testAutoSetUploadValidator()
     {
+        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
+            $this->markTestSkipped(
+                'Skipping tests related to validators until zend-validator is updated to '
+                . 'zend-servicemanager v3.'
+            );
+        }
+
         $validators = [
             new FileValidator\Count(1),
             new FileValidator\Extension('jpg'),
@@ -276,6 +283,13 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 
     public function testUploadProgressAdapter()
     {
+        if (! class_exists('Zend\ProgressBar\Adapter\AbstractAdapter')) {
+            $this->markTestSkipped(
+                'Skipping tests related to progress bars until zend-progressbar is updated to '
+                . 'zend-stdlib/zend-servicemanager v3.'
+            );
+        }
+
         if (!Adapter\Http::isApcAvailable() && !Adapter\Http::isUploadProgressAvailable()) {
             $this->markTestSkipped('Whether APC nor UploadExtension available');
         }
