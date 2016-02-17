@@ -21,24 +21,6 @@ All notable changes to this project will be documented in this file, in reverse 
 - [#18](https://github.com/zendframework/zend-file/pull/18) updates the codebase
   to be forwards compatible with zend-servicemanager and zend-stdlib v3.
 
-## 2.5.3 - TBD
-
-### Added
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
-
 ## 2.5.2 - 2016-02-16
 
 ### Added
