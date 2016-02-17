@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.6.0 - TBD
+## 2.6.0 - 2016-02-17
 
 ### Added
 
@@ -18,7 +18,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#18](https://github.com/zendframework/zend-file/pull/18) updates the codebase
+  to be forwards compatible with zend-servicemanager and zend-stdlib v3.
 
 ## 2.5.3 - TBD
 
