@@ -13,7 +13,6 @@ use Interop\Container\ContainerInterface;
 use stdClass;
 use Zend\File;
 use Zend\Filter;
-use Zend\Filter\Word;
 use Zend\Validator;
 use Zend\Validator\File as FileValidator;
 
