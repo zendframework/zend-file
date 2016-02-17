@@ -47,13 +47,6 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testAdapterShouldLazyLoadValidatorPluginManager()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $loader = $this->adapter->getValidatorManager();
         $this->assertInstanceOf('Zend\File\Transfer\Adapter\ValidatorPluginManager', $loader);
     }
@@ -68,13 +61,6 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowAddingValidatorInstance()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $validator = new FileValidator\Count(['min' => 1, 'max' => 1]);
         $this->adapter->addValidator($validator);
         $test = $this->adapter->getValidator('Zend\Validator\File\Count');
@@ -83,13 +69,6 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowAddingValidatorViaPluginManager()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $this->adapter->addValidator('Count', false, ['min' => 1, 'max' => 1]);
         $test = $this->adapter->getValidator('Count');
         $this->assertInstanceOf('Zend\Validator\File\Count', $test);
@@ -97,26 +76,12 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testAdapterhShouldRaiseExceptionWhenAddingInvalidValidatorType()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $this->setExpectedException('Zend\File\Transfer\Exception\InvalidArgumentException', 'Invalid validator provided to addValidator');
         $this->adapter->addValidator(new Filter\BaseName);
     }
 
     public function testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoader()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $validators = [
             'count' => ['min' => 1, 'max' => 1],
             'Exists' => 'C:\temp',
@@ -144,25 +109,11 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testGetValidatorShouldReturnNullWhenNoMatchingIdentifierExists()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $this->assertNull($this->adapter->getValidator('Between'));
     }
 
     public function testAdapterShouldAllowPullingValidatorsByFile()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $this->adapter->addValidator('Between', false, ['min' => 1, 'max' => 5], 'foo');
         $validators = $this->adapter->getValidators('foo');
         $this->assertEquals(1, count($validators));
@@ -172,13 +123,6 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testCallingSetValidatorsOnAdapterShouldOverwriteExistingValidators()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $this->testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoader();
         $validators = [
             new FileValidator\Count(1),
@@ -191,13 +135,6 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowRetrievingValidatorInstancesByClassName()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $this->testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoader();
         $ext = $this->adapter->getValidator('Zend\Validator\File\Extension');
         $this->assertInstanceOf('Zend\Validator\File\Extension', $ext);
@@ -205,13 +142,6 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowRetrievingValidatorInstancesByPluginName()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $this->testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoader();
         $count = $this->adapter->getValidator('Count');
         $this->assertInstanceOf('Zend\Validator\File\Count', $count);
@@ -219,13 +149,6 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowRetrievingAllValidatorsAtOnce()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $this->testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoader();
         $validators = $this->adapter->getValidators();
         $this->assertInternalType('array', $validators);
@@ -237,13 +160,6 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowRemovingValidatorInstancesByClassName()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $this->testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoader();
         $this->assertTrue($this->adapter->hasValidator('Zend\Validator\File\Extension'));
         $this->adapter->removeValidator('Zend\Validator\File\Extension');
@@ -252,13 +168,6 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowRemovingValidatorInstancesByPluginName()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $this->testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoader();
         $this->assertTrue($this->adapter->hasValidator('Count'));
         $this->adapter->removeValidator('Count');
@@ -267,13 +176,6 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testRemovingNonexistentValidatorShouldDoNothing()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $this->testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoader();
         $validators = $this->adapter->getValidators();
         $this->assertFalse($this->adapter->hasValidator('Between'));
@@ -285,13 +187,6 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowRemovingAllValidatorsAtOnce()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $this->testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoader();
         $this->adapter->clearValidators();
         $validators = $this->adapter->getValidators();
@@ -301,51 +196,23 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testValidationShouldReturnTrueForValidTransfer()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $this->adapter->addValidator('Count', false, [1, 3], 'foo');
         $this->assertTrue($this->adapter->isValid('foo'));
     }
 
     public function testValidationShouldReturnTrueForValidTransferOfMultipleFiles()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $this->assertTrue($this->adapter->isValid(null));
     }
 
     public function testValidationShouldReturnFalseForInvalidTransfer()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $this->adapter->addValidator('Extension', false, 'png', 'foo');
         $this->assertFalse($this->adapter->isValid('foo'));
     }
 
     public function testValidationShouldThrowExceptionForNonexistentFile()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $this->assertFalse($this->adapter->isValid('bogus'));
     }
 
@@ -709,13 +576,6 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testSetOwnErrorMessage()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $this->adapter->addValidator('Count', false, ['min' => 5, 'max' => 5, 'messages' => [FileValidator\Count::TOO_FEW => 'Zu wenige']]);
         $this->assertFalse($this->adapter->isValid('foo'));
         $message = $this->adapter->getMessages();
@@ -751,13 +611,6 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     public function testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoaderForDifferentFiles()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping tests related to validators until zend-validator is updated to '
-                . 'zend-servicemanager v3.'
-            );
-        }
-
         $validators = [
             ['MimeType', true, ['image/jpeg']], // no files
             ['FilesSize', true, ['max' => '1MB', 'message' => 'файл больше 1MБ']], // no files

@@ -29,13 +29,6 @@ class HttpTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        if (! interface_exists('Zend\Validator\ValidatorInterface')) {
-            $this->markTestSkipped(
-                'Skipping HTTP adapter tests until zend-validator is updated to zend-servicemanager v3 '
-                . 'and zend-progressbar is updated to zend-stdlib v3.'
-            );
-        }
-
         $_FILES = [
             'txt' => [
                 'name' => 'test.txt',

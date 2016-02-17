@@ -290,6 +290,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
     public function addValidator($validator, $breakChainOnFailure = false, $options = null, $files = null)
     {
         if (is_string($validator)) {
+            $options = (null !== $options && is_scalar($options)) ? [$options] : $options;
             $validator = $this->getValidatorManager()->get($validator, $options);
             if (is_array($options) && isset($options['messages'])) {
                 if (is_array($options['messages'])) {

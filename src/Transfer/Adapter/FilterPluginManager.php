@@ -21,6 +21,21 @@ use Zend\Filter\File;
  */
 class FilterPluginManager extends BaseManager
 {
+    protected $defaultFileFilterAliases = [
+        'decrypt'       => File\Decrypt::class,
+        'Decrypt'       => File\Decrypt::class,
+        'encrypt'       => File\Encrypt::class,
+        'Encrypt'       => File\Encrypt::class,
+        'lowercase'     => File\LowerCase::class,
+        'lowerCase'     => File\LowerCase::class,
+        'LowerCase'     => File\LowerCase::class,
+        'rename'        => File\Rename::class,
+        'Rename'        => File\Rename::class,
+        'uppercase'     => File\UpperCase::class,
+        'upperCase'     => File\UpperCase::class,
+        'UpperCase'     => File\UpperCase::class,
+    ];
+
     /**
      * Constructor
      *
@@ -33,14 +48,7 @@ class FilterPluginManager extends BaseManager
      */
     public function __construct($configOrContainerInstance = null, array $v3config = [])
     {
-        $this->aliases = array_merge([
-            'decrypt'       => File\Decrypt::class,
-            'encrypt'       => File\Encrypt::class,
-            'lowercase'     => File\LowerCase::class,
-            'rename'        => File\Rename::class,
-            'uppercase'     => File\UpperCase::class,
-        ], $this->aliases);
-
+        $this->aliases = array_merge($this->defaultFileFilterAliases, $this->aliases);
         parent::__construct($configOrContainerInstance, $v3config);
     }
 }
