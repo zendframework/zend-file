@@ -241,10 +241,10 @@ class HttpTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('No upload in progress', $status);
     }
 
-    public function testUploadProgressFailure()
+    public function testUploadProgressFailureForAPC()
     {
-        if (!Adapter\Http::isApcAvailable() && !Adapter\Http::isUploadProgressAvailable()) {
-            $this->markTestSkipped('Whether APC nor UploadExtension available');
+        if (! Adapter\Http::isApcAvailable()) {
+            $this->markTestSkipped('APC extension is unavailable');
         }
 
         $_GET['progress_key'] = 'mykey';
@@ -255,10 +255,30 @@ class HttpTest extends \PHPUnit_Framework_TestCase
             'rate'    => 10,
             'id'      => 'mykey',
             'done'    => false,
-            'message' => '100B - 100B'
-            ], $status);
+            'message' => '100B - 100B',
+        ], $status);
+    }
 
+    public function testUploadProgressFailureForUploadProgressExtension()
+    {
+        if (! Adapter\Http::isUploadProgressAvailable()) {
+            $this->markTestSkipped('uploadprogress extension is unavailable');
+        }
+
+        $_GET['progress_key'] = 'mykey';
         $this->adapter->switchApcToUP();
+
+        $status = HttpTestMockAdapter::getProgress();
+        $this->assertEquals([
+            'total'   => 100,
+            'current' => 90,
+            'rate'    => 10,
+            'id'      => 'mykey',
+            'done'    => false,
+            'message' => '90B - 100B',
+        ], $status);
+
+        $this->adapter->forceUPFailure();
         $status = HttpTestMockAdapter::getProgress($status);
         $this->assertEquals([
             'total'          => 100,
@@ -270,8 +290,8 @@ class HttpTest extends \PHPUnit_Framework_TestCase
             'cancel_upload'  => true,
             'message'        => 'The upload has been canceled',
             'done'           => true,
-            'id'             => 'mykey'
-            ], $status);
+            'id'             => 'mykey',
+        ], $status);
     }
 
     public function testUploadProgressAdapter()

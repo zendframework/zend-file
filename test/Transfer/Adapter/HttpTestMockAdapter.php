@@ -18,9 +18,12 @@ use Zend\File\Transfer\Adapter;
  */
 class HttpTestMockAdapter extends Adapter\Http
 {
+    private static $uploadProgressShouldFail;
+
     public function __construct()
     {
-        self::$callbackApc = ['ZendTest\File\Transfer\Adapter\HttpTestMockAdapter', 'apcTest'];
+        static::$callbackApc = [HttpTestMockAdapter::class, 'apcTest'];
+        self::$uploadProgressShouldFail = false;
         parent::__construct();
     }
 
@@ -41,15 +44,32 @@ class HttpTestMockAdapter extends Adapter\Http
 
     public static function apcTest($id)
     {
+        if (! is_array($id)) {
+            return [
+                'total' => 100,
+                'current' => 100,
+                'rate' => 10,
+            ];
+        }
+
         return [
-            'total' => 100,
-            'current' => 100,
-            'rate' => 10,
+            'bytes_total' => 100,
+            'bytes_uploaded' => 100,
+            'speed_average' => 10,
+            'cancel_upload' => true,
         ];
     }
 
     public static function uPTest($id)
     {
+        if (! self::$uploadProgressShouldFail) {
+            return [
+                'total' => 100,
+                'current' => 90,
+                'rate' => 10,
+            ];
+        }
+
         return [
             'bytes_total' => 100,
             'bytes_uploaded' => 100,
@@ -60,7 +80,12 @@ class HttpTestMockAdapter extends Adapter\Http
 
     public function switchApcToUP()
     {
-        self::$callbackApc = null;
-        self::$callbackUploadProgress = ['ZendTest\File\Transfer\Adapter\HttpTestMockAdapter', 'uPTest'];
+        static::$callbackApc = null;
+        static::$callbackUploadProgress = [HttpTestMockAdapter::class, 'uPTest'];
+    }
+
+    public function forceUPFailure()
+    {
+        self::$uploadProgressShouldFail = true;
     }
 }
