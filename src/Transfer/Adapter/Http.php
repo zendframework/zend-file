@@ -288,7 +288,7 @@ class Http extends AbstractAdapter
      */
     public static function getProgress($id = null)
     {
-        if (!static::isApcAvailable() && !static::isUploadProgressAvailable()) {
+        if (!self::isApcAvailable() && !self::isUploadProgressAvailable()) {
             throw new Exception\PhpEnvironmentException('Neither APC nor UploadProgress extension installed');
         }
 
@@ -332,18 +332,18 @@ class Http extends AbstractAdapter
         }
 
         if (!empty($id)) {
-            if (static::isApcAvailable()) {
+            if (self::isApcAvailable()) {
                 $call = call_user_func(static::$callbackApc, ini_get('apc.rfc1867_prefix') . $id);
                 if (is_array($call)) {
                     $status = $call + $status;
                 }
-            } elseif (static::isUploadProgressAvailable()) {
+            } elseif (self::isUploadProgressAvailable()) {
                 $call = call_user_func(static::$callbackUploadProgress, $id);
                 if (is_array($call)) {
                     $status = $call + $status;
-                    $status['total']   = $status['bytes_total'];
-                    $status['current'] = $status['bytes_uploaded'];
-                    $status['rate']    = $status['speed_average'];
+                    $status['total']   = isset($status['bytes_total']) ? $status['bytes_total'] : $status['total'];
+                    $status['current'] = isset($status['bytes_uploaded']) ? $status['bytes_uploaded'] : $status['current'];
+                    $status['rate']    = isset($status['speed_average']) ? $status['speed_average'] : $status['rate'];
                     if ($status['total'] == $status['current']) {
                         $status['done'] = true;
                     }
