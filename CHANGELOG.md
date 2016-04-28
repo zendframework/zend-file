@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.7.0 - TBD
+## 2.7.0 - 2016-04-28
 
 ### Added
 
@@ -18,24 +18,6 @@ All notable changes to this project will be documented in this file, in reverse 
     them, and potentially transforming them.
   - zend-validator, for validating upload succes, file type, hash, etc.
   - zend-progressbar, for managing upload status.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
-
-## 2.6.2 - TBD
-
-### Added
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
 
 ### Removed
 
