@@ -18,6 +18,7 @@ use Zend\Filter\File;
  * Enforces that filters retrieved are instances of
  * FilterInterface. Additionally, it registers a number of default filters.
  *
+ * @deprecated since 2.7.0, and scheduled for removal with 3.0.0
  */
 class FilterPluginManager extends BaseManager
 {
