@@ -12,6 +12,9 @@ namespace Zend\File\Transfer\Adapter;
 use Zend\Validator\File;
 use Zend\Validator\ValidatorPluginManager as BaseManager;
 
+/**
+ * @deprecated since 2.7.0, and scheduled for removal with 3.0.0
+ */
 class ValidatorPluginManager extends BaseManager
 {
     protected $defaultFileValidationAliases = [

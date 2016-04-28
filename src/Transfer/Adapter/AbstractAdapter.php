@@ -30,7 +30,7 @@ use Zend\Validator;
  * modifying that should be done in tandem with a rewrite to utilize validator
  * and filter chains instead.
  *
- * @todo      Rewrite
+ * @deprecated since 2.7.0, and scheduled for removal with 3.0.0
  */
 abstract class AbstractAdapter implements TranslatorAwareInterface
 {
