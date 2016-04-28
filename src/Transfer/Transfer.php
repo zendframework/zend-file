@@ -12,6 +12,7 @@ namespace Zend\File\Transfer;
 /**
  * Base class for all protocols supporting file transfers
  *
+ * @deprecated since 2.7.0, and scheduled for removal with 3.0.0
  */
 class Transfer
 {

@@ -17,6 +17,7 @@ use Zend\ProgressBar\Adapter;
 /**
  * File transfer adapter class for the HTTP protocol
  *
+ * @deprecated since 2.7.0, and scheduled for removal with 3.0.0
  */
 class Http extends AbstractAdapter
 {
