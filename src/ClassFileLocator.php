@@ -37,7 +37,10 @@ class ClassFileLocator extends FilterIterator
                 throw new Exception\InvalidArgumentException('Expected a valid directory name');
             }
 
-            $dirOrIterator = new RecursiveDirectoryIterator($dirOrIterator, RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
+            $dirOrIterator = new RecursiveDirectoryIterator(
+                $dirOrIterator,
+                RecursiveDirectoryIterator::FOLLOW_SYMLINKS
+            );
         } elseif (! $dirOrIterator instanceof DirectoryIterator) {
             throw new Exception\InvalidArgumentException('Expected a DirectoryIterator');
         }
@@ -120,6 +123,7 @@ class ClassFileLocator extends FilterIterator
                     if ($i > 0 && is_array($tokens[$i - 1]) && $tokens[$i - 1][0] === T_DOUBLE_COLON) {
                         break;
                     }
+                    // no break
                 case T_INTERFACE:
                     // Abstract class, class, interface or trait found
 

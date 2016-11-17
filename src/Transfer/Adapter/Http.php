@@ -343,7 +343,9 @@ class Http extends AbstractAdapter
                 if (is_array($call)) {
                     $status = $call + $status;
                     $status['total']   = isset($status['bytes_total']) ? $status['bytes_total'] : $status['total'];
-                    $status['current'] = isset($status['bytes_uploaded']) ? $status['bytes_uploaded'] : $status['current'];
+                    $status['current'] = isset($status['bytes_uploaded'])
+                        ? $status['bytes_uploaded']
+                        : $status['current'];
                     $status['rate']    = isset($status['speed_average']) ? $status['speed_average'] : $status['rate'];
                     if ($status['total'] == $status['current']) {
                         $status['done'] = true;
@@ -358,7 +360,8 @@ class Http extends AbstractAdapter
                 $status['done']    = true;
                 $status['message'] = 'The upload has been canceled';
             } else {
-                $status['message'] = static::toByteString($status['current']) . " - " . static::toByteString($status['total']);
+                $status['message'] = static::toByteString($status['current']) . " - "
+                    . static::toByteString($status['total']);
             }
 
             $status['id'] = $id;
@@ -425,7 +428,8 @@ class Http extends AbstractAdapter
                 $this->files[$form]['name'] = $form;
                 foreach ($this->files[$form]['multifiles'] as $key => $value) {
                     if ($this->files[$value]['tmp_name'] !== '') {
-                        $this->files[$value]['name']  = basename($this->files[$value]['tmp_name']) . '_' .  $this->files[$value]['name'];
+                        $this->files[$value]['name']  = basename($this->files[$value]['tmp_name'])
+                            . '_' .  $this->files[$value]['name'];
                     }
                     $this->files[$value]['options']   = $this->options;
                     $this->files[$value]['validated'] = false;
@@ -446,7 +450,8 @@ class Http extends AbstractAdapter
             } else {
                 $this->files[$form]              = $content;
                 if ($this->files[$form]['tmp_name'] !== '') {
-                    $this->files[$form]['name']  = basename($this->files[$form]['tmp_name']) . '_' .  $this->files[$form]['name'];
+                    $this->files[$form]['name']  = basename($this->files[$form]['tmp_name'])
+                        . '_' .  $this->files[$form]['name'];
                 }
                 $this->files[$form]['options']   = $this->options;
                 $this->files[$form]['validated'] = false;
