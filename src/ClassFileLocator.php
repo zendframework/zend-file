@@ -33,12 +33,12 @@ class ClassFileLocator extends FilterIterator
     public function __construct($dirOrIterator = '.')
     {
         if (is_string($dirOrIterator)) {
-            if (!is_dir($dirOrIterator)) {
+            if (! is_dir($dirOrIterator)) {
                 throw new Exception\InvalidArgumentException('Expected a valid directory name');
             }
 
             $dirOrIterator = new RecursiveDirectoryIterator($dirOrIterator, RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
-        } elseif (!$dirOrIterator instanceof DirectoryIterator) {
+        } elseif (! $dirOrIterator instanceof DirectoryIterator) {
             throw new Exception\InvalidArgumentException('Expected a DirectoryIterator');
         }
 
@@ -60,12 +60,12 @@ class ClassFileLocator extends FilterIterator
         $file = $this->getInnerIterator()->current();
         // If we somehow have something other than an SplFileInfo object, just
         // return false
-        if (!$file instanceof SplFileInfo) {
+        if (! $file instanceof SplFileInfo) {
             return false;
         }
 
         // If we have a directory, it's not a file, so return false
-        if (!$file->isFile()) {
+        if (! $file->isFile()) {
             return false;
         }
 
@@ -80,7 +80,7 @@ class ClassFileLocator extends FilterIterator
         $t_trait  = defined('T_TRAIT') ? T_TRAIT : -1; // For preserve PHP 5.3 compatibility
         for ($i = 0; $i < $count; $i++) {
             $token = $tokens[$i];
-            if (!is_array($token)) {
+            if (! is_array($token)) {
                 // single character token found; skip
                 $i++;
                 continue;
@@ -117,7 +117,7 @@ class ClassFileLocator extends FilterIterator
                 case $t_trait:
                 case T_CLASS:
                     // ignore T_CLASS after T_DOUBLE_COLON to allow PHP >=5.5 FQCN scalar resolution
-                    if ($i > 0 && is_array($tokens[$i-1]) && $tokens[$i-1][0] === T_DOUBLE_COLON) {
+                    if ($i > 0 && is_array($tokens[$i - 1]) && $tokens[$i - 1][0] === T_DOUBLE_COLON) {
                         break;
                     }
                 case T_INTERFACE:
@@ -133,7 +133,7 @@ class ClassFileLocator extends FilterIterator
                         if (T_STRING == $type) {
                             // If a classname was found, set it in the object, and
                             // return boolean true (found)
-                            if (!isset($namespace) || null === $namespace) {
+                            if (! isset($namespace) || null === $namespace) {
                                 if (isset($saveNamespace) && $saveNamespace) {
                                     $namespace = $savedNamespace;
                                 } else {
@@ -155,7 +155,7 @@ class ClassFileLocator extends FilterIterator
             }
         }
         $classes = $file->getClasses();
-        if (!empty($classes)) {
+        if (! empty($classes)) {
             return true;
         }
         // No class-type tokens found; return false
