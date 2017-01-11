@@ -1,45 +1,53 @@
 <?php
-$finder = Symfony\CS\Finder\DefaultFinder::create()
+
+use PhpCsFixer\Finder;
+use PhpCsFixer\Config;
+
+$finder = Finder::create()
     ->in('src')
     ->in('test')
     ->notPath('TestAsset')
     ->notPath('_files')
     ->filter(function (SplFileInfo $file) {
-        if (strstr($file->getPath(), 'compatibility')) {
+        if (\strstr($file->getPath(), 'compatibility')) {
             return false;
         }
     });
-$config = Symfony\CS\Config\Config::create();
-$config->level(null);
-$config->fixers(
-    array(
-        'braces',
-        'duplicate_semicolon',
-        'elseif',
-        'empty_return',
-        'encoding',
-        'eof_ending',
-        'function_call_space',
-        'function_declaration',
-        'indentation',
-        'join_function',
-        'line_after_namespace',
-        'linefeed',
-        'lowercase_keywords',
-        'parenthesis',
-        'multiple_use',
-        'method_argument_space',
-        'object_operator',
-        'php_closing_tag',
-        'remove_lines_between_uses',
-        'short_array_syntax',
-        'short_tag',
-        'standardize_not_equal',
-        'trailing_spaces',
-        'unused_use',
-        'visibility',
-        'whitespacy_lines',
-    )
-);
-$config->finder($finder);
+
+$config = Config::create()
+    ->setRiskyAllowed(true)
+    ->setRules([
+        'array_syntax' => [
+            'syntax' => 'short',
+        ],
+        'blank_line_after_namespace' => true,
+        'braces' => true,
+        'elseif' => true,
+        'encoding' => true,
+        'full_opening_tag' => true,
+        'function_declaration' => true,
+        'indentation_type' => true,
+        'line_ending' => true,
+        'lowercase_keywords' => true,
+        'method_argument_space' => true,
+        'no_alias_functions' => true,
+        'no_closing_tag' => true,
+        'no_empty_statement' => true,
+        'no_extra_consecutive_blank_lines' => [
+            'use',
+        ],
+        'no_spaces_after_function_name' => true,
+        'no_spaces_inside_parenthesis' => true,
+        'no_trailing_whitespace' => true,
+        'no_unused_imports' => true,
+        'no_whitespace_in_blank_line' => true,
+        'object_operator_without_whitespace' => true,
+        'simplified_null_return' => true,
+        'single_blank_line_at_eof' => true,
+        'single_import_per_statement' => true,
+        'standardize_not_equals' => true,
+        'visibility_required' => true,
+    ])
+    ->setFinder($finder);
+
 return $config;
