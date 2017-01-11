@@ -10,6 +10,7 @@
 namespace ZendTest\File;
 
 use Zend\File\ClassFileLocator;
+use Zend\File\Exception;
 
 /**
  * Test class for Zend\File\ClassFileLocator
@@ -20,14 +21,14 @@ class ClassFileLocatorTest extends \PHPUnit_Framework_TestCase
 {
     public function testConstructorThrowsInvalidArgumentExceptionForInvalidStringDirectory()
     {
-        $this->setExpectedException('Zend\File\Exception\InvalidArgumentException');
+        $this->setExpectedException(Exception\InvalidArgumentException::class);
         $locator = new ClassFileLocator('__foo__');
     }
 
     public function testConstructorThrowsInvalidArgumentExceptionForNonDirectoryIteratorArgument()
     {
         $iterator = new \ArrayIterator([]);
-        $this->setExpectedException('Zend\File\Exception\InvalidArgumentException');
+        $this->setExpectedException(Exception\InvalidArgumentException::class);
         $locator = new ClassFileLocator($iterator);
     }
 
@@ -112,16 +113,16 @@ class ClassFileLocatorTest extends \PHPUnit_Framework_TestCase
             if (preg_match('/MultipleClassesInMultipleNamespaces\.php$/', $file->getFilename())) {
                 $classes = $file->getClasses();
                 foreach ($classes as $class) {
-                    if ($class === 'ZendTest\File\TestAsset\LocatorShouldFindFirstClass') {
+                    if ($class === TestAsset\LocatorShouldFindFirstClass::class) {
                         $foundFirst = true;
                     }
-                    if ($class === 'ZendTest\File\TestAsset\LocatorShouldFindSecondClass') {
+                    if ($class === TestAsset\LocatorShouldFindSecondClass::class) {
                         $foundSecond = true;
                     }
-                    if ($class === 'ZendTest\File\TestAsset\SecondTestNamespace\LocatorShouldFindThirdClass') {
+                    if ($class === TestAsset\SecondTestNamespace\LocatorShouldFindThirdClass::class) {
                         $foundThird = true;
                     }
-                    if ($class === 'ZendTest\File\TestAsset\SecondTestNamespace\LocatorShouldFindFourthClass') {
+                    if ($class === TestAsset\SecondTestNamespace\LocatorShouldFindFourthClass::class) {
                         $foundFourth = true;
                     }
                 }
