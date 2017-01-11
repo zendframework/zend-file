@@ -8,6 +8,7 @@
  */
 
 namespace ZendTest\File\TestAsset
+
 {
 
     class LocatorShouldFindFirstClass
@@ -21,6 +22,7 @@ namespace ZendTest\File\TestAsset
 }
 
 namespace ZendTest\File\TestAsset\SecondTestNamespace
+
 {
 
     class LocatorShouldFindThirdClass
