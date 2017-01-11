@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2017 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -11,6 +11,7 @@ namespace ZendTest\File;
 
 use Zend\File\ClassFileLocator;
 use Zend\File\Exception;
+use Zend\File\PhpClassFile;
 
 /**
  * Test class for Zend\File\ClassFileLocator
@@ -146,5 +147,30 @@ class ClassFileLocatorTest extends \PHPUnit_Framework_TestCase
             }
             $this->assertCount(1, $file->getClasses());
         }
+    }
+
+    /**
+     * @requires PHP 7.1
+     */
+    public function testIgnoresAnonymousClasses()
+    {
+        $classFileLocator = new ClassFileLocator(__DIR__ . '/TestAsset/Anonymous');
+
+        $classFiles = \iterator_to_array($classFileLocator);
+
+        $this->assertCount(1, $classFiles);
+
+        $classNames = \array_reduce($classFiles, function (array $classNames, PhpClassFile $classFile) {
+            return \array_merge(
+                $classNames,
+                $classFile->getClasses()
+            );
+        }, []);
+
+        $expected = [
+            TestAsset\Anonymous\WithAnonymousClass::class,
+        ];
+
+        $this->assertEquals($expected, $classNames);
     }
 }

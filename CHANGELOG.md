@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.7.1 - TBD
+## 2.7.1 - 2017-01-11
 
 ### Added
 
@@ -18,7 +18,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#34](https://github.com/zendframework/zend-file/pull/34) ensures that
+  anonymous classes are ignored by the `ClassFileLocator` when identifying files
+  with class declarations.
 
 ## 2.7.0 - 2016-04-28
 
