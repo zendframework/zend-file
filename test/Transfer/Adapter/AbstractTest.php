@@ -47,7 +47,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     public function testAdapterShouldLazyLoadValidatorPluginManager()
     {
         $loader = $this->adapter->getValidatorManager();
-        $this->assertInstanceOf('Zend\File\Transfer\Adapter\ValidatorPluginManager', $loader);
+        $this->assertInstanceOf(File\Transfer\Adapter\ValidatorPluginManager::class, $loader);
     }
 
     public function testAdapterShouldAllowSettingFilterPluginManagerInstance()
@@ -62,7 +62,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     {
         $validator = new FileValidator\Count(['min' => 1, 'max' => 1]);
         $this->adapter->addValidator($validator);
-        $test = $this->adapter->getValidator('Zend\Validator\File\Count');
+        $test = $this->adapter->getValidator(Validator\File\Count::class);
         $this->assertSame($validator, $test);
     }
 
@@ -70,12 +70,12 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     {
         $this->adapter->addValidator('Count', false, ['min' => 1, 'max' => 1]);
         $test = $this->adapter->getValidator('Count');
-        $this->assertInstanceOf('Zend\Validator\File\Count', $test);
+        $this->assertInstanceOf(Validator\File\Count::class, $test);
     }
 
     public function testAdapterhShouldRaiseExceptionWhenAddingInvalidValidatorType()
     {
-        $this->setExpectedException('Zend\File\Transfer\Exception\InvalidArgumentException', 'Invalid validator provided to addValidator');
+        $this->setExpectedException(File\Transfer\Exception\InvalidArgumentException::class, 'Invalid validator provided to addValidator');
         $this->adapter->addValidator(new Filter\BaseName);
     }
 
@@ -95,13 +95,13 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $test);
         $this->assertEquals(4, count($test), var_export($test, 1));
         $count = array_shift($test);
-        $this->assertInstanceOf('Zend\Validator\File\Count', $count);
+        $this->assertInstanceOf(Validator\File\Count::class, $count);
         $exists = array_shift($test);
-        $this->assertInstanceOf('Zend\Validator\File\Exists', $exists);
+        $this->assertInstanceOf(Validator\File\Exists::class, $exists);
         $size = array_shift($test);
-        $this->assertInstanceOf('Zend\Validator\File\Upload', $size);
+        $this->assertInstanceOf(Validator\File\Upload::class, $size);
         $ext = array_shift($test);
-        $this->assertInstanceOf('Zend\Validator\File\Extension', $ext);
+        $this->assertInstanceOf(Validator\File\Extension::class, $ext);
         $orig = array_pop($validators);
         $this->assertSame($orig, $ext);
     }
@@ -117,7 +117,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $validators = $this->adapter->getValidators('foo');
         $this->assertEquals(1, count($validators));
         $validator = array_shift($validators);
-        $this->assertInstanceOf('Zend\Validator\Between', $validator);
+        $this->assertInstanceOf(Validator\Between::class, $validator);
     }
 
     public function testCallingSetValidatorsOnAdapterShouldOverwriteExistingValidators()
@@ -135,15 +135,15 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     public function testAdapterShouldAllowRetrievingValidatorInstancesByClassName()
     {
         $this->testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoader();
-        $ext = $this->adapter->getValidator('Zend\Validator\File\Extension');
-        $this->assertInstanceOf('Zend\Validator\File\Extension', $ext);
+        $ext = $this->adapter->getValidator(Validator\File\Extension::class);
+        $this->assertInstanceOf(Validator\File\Extension::class, $ext);
     }
 
     public function testAdapterShouldAllowRetrievingValidatorInstancesByPluginName()
     {
         $this->testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoader();
         $count = $this->adapter->getValidator('Count');
-        $this->assertInstanceOf('Zend\Validator\File\Count', $count);
+        $this->assertInstanceOf(Validator\File\Count::class, $count);
     }
 
     public function testAdapterShouldAllowRetrievingAllValidatorsAtOnce()
@@ -153,16 +153,16 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $validators);
         $this->assertEquals(4, count($validators));
         foreach ($validators as $validator) {
-            $this->assertInstanceOf('Zend\Validator\ValidatorInterface', $validator);
+            $this->assertInstanceOf(Validator\ValidatorInterface::class, $validator);
         }
     }
 
     public function testAdapterShouldAllowRemovingValidatorInstancesByClassName()
     {
         $this->testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoader();
-        $this->assertTrue($this->adapter->hasValidator('Zend\Validator\File\Extension'));
-        $this->adapter->removeValidator('Zend\Validator\File\Extension');
-        $this->assertFalse($this->adapter->hasValidator('Zend\Validator\File\Extension'));
+        $this->assertTrue($this->adapter->hasValidator(Validator\File\Extension::class));
+        $this->adapter->removeValidator(Validator\File\Extension::class);
+        $this->assertFalse($this->adapter->hasValidator(Validator\File\Extension::class));
     }
 
     public function testAdapterShouldAllowRemovingValidatorInstancesByPluginName()
@@ -248,14 +248,14 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     public function testAdapterShouldLazyLoadFilterPluginManager()
     {
         $loader = $this->adapter->getFilterManager();
-        $this->assertInstanceOf('Zend\File\Transfer\Adapter\FilterPluginManager', $loader);
+        $this->assertInstanceOf(File\Transfer\Adapter\FilterPluginManager::class, $loader);
     }
 
     public function testAdapterShouldAllowAddingFilterInstance()
     {
         $filter = new Filter\StringToLower();
         $this->adapter->addFilter($filter);
-        $test = $this->adapter->getFilter('Zend\Filter\StringToLower');
+        $test = $this->adapter->getFilter(Filter\StringToLower::class);
         $this->assertSame($filter, $test);
     }
 
@@ -263,13 +263,13 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     {
         $this->adapter->addFilter('StringTrim');
         $test = $this->adapter->getFilter('StringTrim');
-        $this->assertInstanceOf('Zend\Filter\StringTrim', $test);
+        $this->assertInstanceOf(Filter\StringTrim::class, $test);
     }
 
 
     public function testAdapterhShouldRaiseExceptionWhenAddingInvalidFilterType()
     {
-        $this->setExpectedException('Zend\File\Transfer\Exception\InvalidArgumentException', 'Invalid filter specified');
+        $this->setExpectedException(File\Transfer\Exception\InvalidArgumentException::class, 'Invalid filter specified');
         $this->adapter->addFilter(new stdClass());
     }
 
@@ -288,9 +288,9 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $test);
         $this->assertEquals(3, count($test), var_export($test, 1));
         $count = array_shift($test);
-        $this->assertInstanceOf('Zend\Filter\Word\SeparatorToCamelCase', $count);
+        $this->assertInstanceOf(Filter\Word\SeparatorToCamelCase::class, $count);
         $size = array_shift($test);
-        $this->assertInstanceOf('Zend\Filter\Boolean', $size);
+        $this->assertInstanceOf(Filter\Boolean::class, $size);
         $ext  = array_shift($test);
         $orig = array_pop($filters);
         $this->assertSame($orig, $ext);
@@ -307,7 +307,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $filters = $this->adapter->getFilters('foo');
         $this->assertEquals(1, count($filters));
         $filter = array_shift($filters);
-        $this->assertInstanceOf('Zend\Filter\Boolean', $filter);
+        $this->assertInstanceOf(Filter\Boolean::class, $filter);
     }
 
     public function testCallingSetFiltersOnAdapterShouldOverwriteExistingFilters()
@@ -325,15 +325,15 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     public function testAdapterShouldAllowRetrievingFilterInstancesByClassName()
     {
         $this->testAdapterShouldAllowAddingMultipleFiltersAtOnceUsingBothInstancesAndPluginLoader();
-        $ext = $this->adapter->getFilter('Zend\Filter\BaseName');
-        $this->assertInstanceOf('Zend\Filter\BaseName', $ext);
+        $ext = $this->adapter->getFilter(Filter\BaseName::class);
+        $this->assertInstanceOf(Filter\BaseName::class, $ext);
     }
 
     public function testAdapterShouldAllowRetrievingFilterInstancesByPluginName()
     {
         $this->testAdapterShouldAllowAddingMultipleFiltersAtOnceUsingBothInstancesAndPluginLoader();
         $count = $this->adapter->getFilter('Boolean');
-        $this->assertInstanceOf('Zend\Filter\Boolean', $count);
+        $this->assertInstanceOf(Filter\Boolean::class, $count);
     }
 
     public function testAdapterShouldAllowRetrievingAllFiltersAtOnce()
@@ -343,16 +343,16 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $filters);
         $this->assertEquals(3, count($filters));
         foreach ($filters as $filter) {
-            $this->assertInstanceOf('Zend\Filter\FilterInterface', $filter);
+            $this->assertInstanceOf(Filter\FilterInterface::class, $filter);
         }
     }
 
     public function testAdapterShouldAllowRemovingFilterInstancesByClassName()
     {
         $this->testAdapterShouldAllowAddingMultipleFiltersAtOnceUsingBothInstancesAndPluginLoader();
-        $this->assertTrue($this->adapter->hasFilter('Zend\Filter\BaseName'));
-        $this->adapter->removeFilter('Zend\Filter\BaseName');
-        $this->assertFalse($this->adapter->hasFilter('Zend\Filter\BaseName'));
+        $this->assertTrue($this->adapter->hasFilter(Filter\BaseName::class));
+        $this->adapter->removeFilter(Filter\BaseName::class);
+        $this->assertFalse($this->adapter->hasFilter(Filter\BaseName::class));
     }
 
     public function testAdapterShouldAllowRemovingFilterInstancesByPluginName()
@@ -457,7 +457,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAdditionalFileInfosForUnknownFile()
     {
-        $this->setExpectedException('Zend\File\Transfer\Exception\RuntimeException', 'The file transfer adapter can not find "unknown"');
+        $this->setExpectedException(File\Transfer\Exception\RuntimeException::class, 'The file transfer adapter can not find "unknown"');
         $files = $this->adapter->getFileInfo('unknown');
     }
 
@@ -499,7 +499,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testExceptionForUnknownHashValue()
     {
-        $this->setExpectedException('Zend\File\Transfer\Exception\InvalidArgumentException', 'Unknown hash algorithm');
+        $this->setExpectedException(File\Transfer\Exception\InvalidArgumentException::class, 'Unknown hash algorithm');
         $this->adapter->getHash('foo', 'unknown_hash');
     }
 
@@ -532,7 +532,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testFileSizeButNoFileFound()
     {
-        $this->setExpectedException('Zend\File\Transfer\Exception\InvalidArgumentException', 'does not exist');
+        $this->setExpectedException(File\Transfer\Exception\InvalidArgumentException::class, 'does not exist');
         $this->assertEquals(10, $this->adapter->getFileSize());
     }
 
@@ -557,7 +557,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testMimeTypeButNoFileFound()
     {
-        $this->setExpectedException('Zend\File\Transfer\Exception\InvalidArgumentException', 'does not exist');
+        $this->setExpectedException(File\Transfer\Exception\InvalidArgumentException::class, 'does not exist');
         $this->assertEquals('image/jpeg', $this->adapter->getMimeType());
     }
 
@@ -580,7 +580,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $message = $this->adapter->getMessages();
         $this->assertContains('Zu wenige', $message);
 
-        $this->setExpectedException('Zend\File\Transfer\Exception\InvalidArgumentException', 'does not exist');
+        $this->setExpectedException(File\Transfer\Exception\InvalidArgumentException::class, 'does not exist');
         $this->assertEquals('image/jpeg', $this->adapter->getMimeType());
     }
 
@@ -590,7 +590,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $this->adapter->setDestination($directory, 'nonexisting');
         $this->assertEquals($directory, $this->adapter->getDestination('nonexisting'));
 
-        $this->setExpectedException('Zend\File\Transfer\Exception\InvalidArgumentException', 'not find');
+        $this->setExpectedException(File\Transfer\Exception\InvalidArgumentException::class, 'not find');
         $this->assertInternalType('string', $this->adapter->getDestination('reallynonexisting'));
     }
 
@@ -626,16 +626,16 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $test = $this->adapter->getValidators('foo');
         $this->assertEquals(2, count($test));
         $mimeType = array_shift($test);
-        $this->assertInstanceOf('Zend\Validator\File\MimeType', $mimeType);
+        $this->assertInstanceOf(Validator\File\MimeType::class, $mimeType);
         $filesSize = array_shift($test);
-        $this->assertInstanceOf('Zend\Validator\File\FilesSize', $filesSize);
+        $this->assertInstanceOf(Validator\File\FilesSize::class, $filesSize);
 
         $test = $this->adapter->getValidators('bar');
         $this->assertEquals(2, count($test));
         $filesSize = array_shift($test);
-        $this->assertInstanceOf('Zend\Validator\File\Count', $filesSize);
+        $this->assertInstanceOf(Validator\File\Count::class, $filesSize);
         $mimeType = array_shift($test);
-        $this->assertInstanceOf('Zend\Validator\File\MimeType', $mimeType);
+        $this->assertInstanceOf(Validator\File\MimeType::class, $mimeType);
 
         $test = $this->adapter->getValidators('baz');
         $this->assertEquals(0, count($test));
