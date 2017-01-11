@@ -75,7 +75,10 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testAdapterhShouldRaiseExceptionWhenAddingInvalidValidatorType()
     {
-        $this->setExpectedException('Zend\File\Transfer\Exception\InvalidArgumentException', 'Invalid validator provided to addValidator');
+        $this->setExpectedException(
+            'Zend\File\Transfer\Exception\InvalidArgumentException',
+            'Invalid validator provided to addValidator'
+        );
         $this->adapter->addValidator(new Filter\BaseName);
     }
 
@@ -269,7 +272,10 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testAdapterhShouldRaiseExceptionWhenAddingInvalidFilterType()
     {
-        $this->setExpectedException('Zend\File\Transfer\Exception\InvalidArgumentException', 'Invalid filter specified');
+        $this->setExpectedException(
+            'Zend\File\Transfer\Exception\InvalidArgumentException',
+            'Invalid filter specified'
+        );
         $this->adapter->addFilter(new stdClass());
     }
 
@@ -457,7 +463,10 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAdditionalFileInfosForUnknownFile()
     {
-        $this->setExpectedException('Zend\File\Transfer\Exception\RuntimeException', 'The file transfer adapter can not find "unknown"');
+        $this->setExpectedException(
+            'Zend\File\Transfer\Exception\RuntimeException',
+            'The file transfer adapter can not find "unknown"'
+        );
         $files = $this->adapter->getFileInfo('unknown');
     }
 
@@ -575,7 +584,11 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testSetOwnErrorMessage()
     {
-        $this->adapter->addValidator('Count', false, ['min' => 5, 'max' => 5, 'messages' => [FileValidator\Count::TOO_FEW => 'Zu wenige']]);
+        $this->adapter->addValidator(
+            'Count',
+            false,
+            ['min' => 5, 'max' => 5, 'messages' => [FileValidator\Count::TOO_FEW => 'Zu wenige']]
+        );
         $this->assertFalse($this->adapter->isValid('foo'));
         $message = $this->adapter->getMessages();
         $this->assertContains('Zu wenige', $message);
@@ -608,8 +621,10 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     /**
      * @ZF-8693
      */
+    // @codingStandardsIgnoreStart
     public function testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoaderForDifferentFiles()
     {
+        // @codingStandardsIgnoreEnd
         $validators = [
             ['MimeType', true, ['image/jpeg']], // no files
             ['FilesSize', true, ['max' => '1MB', 'message' => 'файл больше 1MБ']], // no files

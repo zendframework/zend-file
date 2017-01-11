@@ -47,7 +47,7 @@ class Transfer
      */
     public function setAdapter($adapter, $direction = false, $options = [])
     {
-        if (!is_string($adapter)) {
+        if (! is_string($adapter)) {
             throw new Exception\InvalidArgumentException('Adapter must be a string');
         }
 
@@ -57,7 +57,7 @@ class Transfer
 
         $direction = (int) $direction;
         $this->adapter[$direction] = new $adapter($options);
-        if (!$this->adapter[$direction] instanceof Adapter\AbstractAdapter) {
+        if (! $this->adapter[$direction] instanceof Adapter\AbstractAdapter) {
             throw new Exception\InvalidArgumentException(
                 'Adapter ' . $adapter . ' does not extend Zend\File\Transfer\Adapter\AbstractAdapter'
             );

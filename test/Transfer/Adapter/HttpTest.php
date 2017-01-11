@@ -233,7 +233,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 
     public function testNoUploadInProgress()
     {
-        if (!Adapter\Http::isApcAvailable() && !Adapter\Http::isUploadProgressAvailable()) {
+        if (! Adapter\Http::isApcAvailable() && ! Adapter\Http::isUploadProgressAvailable()) {
             $this->markTestSkipped('Whether APC nor UploadExtension available');
         }
 
@@ -296,7 +296,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 
     public function testUploadProgressAdapter()
     {
-        if (!Adapter\Http::isApcAvailable() && !Adapter\Http::isUploadProgressAvailable()) {
+        if (! Adapter\Http::isApcAvailable() && ! Adapter\Http::isUploadProgressAvailable()) {
             $this->markTestSkipped('Whether APC nor UploadExtension available');
         }
 
