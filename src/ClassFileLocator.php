@@ -122,6 +122,17 @@ class ClassFileLocator extends FilterIterator
                     if ($i > 0 && is_array($tokens[$i - 1]) && $tokens[$i - 1][0] === T_DOUBLE_COLON) {
                         break;
                     }
+
+                    // ignore anonymous classes on PHP 7.1 and greater
+                    if ($i >= 2
+                        && \is_array($tokens[$i - 1])
+                        && T_WHITESPACE === $tokens[$i - 1][0]
+                        && \is_array($tokens[$i - 2])
+                        && T_NEW === $tokens[$i - 2][0]
+                    ) {
+                        break;
+                    }
+
                     // no break
                 case T_INTERFACE:
                     // Abstract class, class, interface or trait found
