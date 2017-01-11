@@ -38,11 +38,15 @@ matrix:
     - php: 5.6
       env:
         - ZEND_SERVICEMANAGER_VERSION="^2.7.5"
-    - php: 7
-    - php: 7
+    - php: 7.0
+    - php: 7.0
       env:
         - ZEND_SERVICEMANAGER_VERSION="^2.7.5"
-    - php: hhvm 
+    - php: 7.1
+    - php: 7.1
+      env:
+        - ZEND_SERVICEMANAGER_VERSION="^2.7.5"
+    - php: hhvm
     - php: hhvm 
       env:
         - ZEND_SERVICEMANAGER_VERSION="^2.7.5"
