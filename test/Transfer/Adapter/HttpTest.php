@@ -10,9 +10,10 @@
 namespace ZendTest\File\Transfer\Adapter;
 
 use Zend\File\Transfer\Adapter;
+use Zend\File\Transfer\Exception\BadMethodCallException;
 use Zend\File\Transfer\Exception\RuntimeException;
-use Zend\ProgressBar\Adapter as AdapterProgressBar;
-use Zend\Validator\File as FileValidator;
+use Zend\ProgressBar;
+use Zend\Validator;
 
 /**
  * Test class for Zend\File\Transfer\Adapter\Http
@@ -60,23 +61,23 @@ class HttpTest extends \PHPUnit_Framework_TestCase
     public function testAutoSetUploadValidator()
     {
         $validators = [
-            new FileValidator\Count(1),
-            new FileValidator\Extension('jpg'),
+            new Validator\File\Count(1),
+            new Validator\File\Extension('jpg'),
         ];
         $this->adapter->setValidators($validators);
         $test = $this->adapter->getValidator('Upload');
-        $this->assertInstanceOf('Zend\Validator\File\Upload', $test);
+        $this->assertInstanceOf(Validator\File\Upload::class, $test);
     }
 
     public function testSendingFiles()
     {
-        $this->setExpectedException('Zend\File\Transfer\Exception\BadMethodCallException', 'not implemented');
+        $this->setExpectedException(BadMethodCallException::class, 'not implemented');
         $this->adapter->send();
     }
 
     public function testFileIsSent()
     {
-        $this->setExpectedException('Zend\File\Transfer\Exception\BadMethodCallException', 'not implemented');
+        $this->setExpectedException(BadMethodCallException::class, 'not implemented');
         $this->adapter->isSent();
     }
 
@@ -301,7 +302,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
         }
 
         $_GET['progress_key'] = 'mykey';
-        $adapter = new AdapterProgressBar\Console();
+        $adapter = new ProgressBar\Adapter\Console();
         $status = ['progress' => $adapter, 'session' => 'upload'];
         $status = HttpTestMockAdapter::getProgress($status);
         $this->assertArrayHasKey('total', $status);
@@ -310,7 +311,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('id', $status);
         $this->assertArrayHasKey('message', $status);
         $this->assertArrayHasKey('progress', $status);
-        $this->assertInstanceOf('Zend\ProgressBar\ProgressBar', $status['progress']);
+        $this->assertInstanceOf(ProgressBar\ProgressBar::class, $status['progress']);
 
         $this->adapter->switchApcToUP();
         $status = HttpTestMockAdapter::getProgress($status);
@@ -320,7 +321,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('id', $status);
         $this->assertArrayHasKey('message', $status);
         $this->assertArrayHasKey('progress', $status);
-        $this->assertInstanceOf('Zend\ProgressBar\ProgressBar', $status['progress']);
+        $this->assertInstanceOf(ProgressBar\ProgressBar::class, $status['progress']);
     }
 
     public function testValidationOfPhpExtendsFormError()

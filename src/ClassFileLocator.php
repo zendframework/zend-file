@@ -50,7 +50,7 @@ class ClassFileLocator extends FilterIterator
         }
 
         parent::__construct($dirOrIterator);
-        $this->setInfoClass('Zend\File\PhpClassFile');
+        $this->setInfoClass(PhpClassFile::class);
     }
 
     /**

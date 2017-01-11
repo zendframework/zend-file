@@ -13,6 +13,7 @@ use Zend\File\Transfer;
 use Zend\File\Transfer\Exception;
 use Zend\ProgressBar;
 use Zend\ProgressBar\Adapter;
+use Zend\Validator;
 
 /**
  * File transfer adapter class for the HTTP protocol
@@ -119,7 +120,7 @@ class Http extends AbstractAdapter
             $temp = [$files => [
                 'name'  => $files,
                 'error' => 1]];
-            $validator = $this->validators['Zend\Validator\File\Upload'];
+            $validator = $this->validators[Validator\File\Upload::class];
             $validator->setTranslator($this->getTranslator())
                       ->setFiles($temp)
                       ->isValid($files, null);
