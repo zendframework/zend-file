@@ -242,7 +242,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
      */
     public function getFilterManager()
     {
-        if (!$this->filterManager instanceof FilterPluginManager) {
+        if (! $this->filterManager instanceof FilterPluginManager) {
             $this->setFilterManager(new FilterPluginManager(new ServiceManager()));
         }
         return $this->filterManager;
@@ -267,7 +267,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
      */
     public function getValidatorManager()
     {
-        if (!$this->validatorManager instanceof ValidatorPluginManager) {
+        if (! $this->validatorManager instanceof ValidatorPluginManager) {
             if ($this->isServiceManagerV3()) {
                 $this->setValidatorManager(new ValidatorPluginManager(new ServiceManager()));
             } else {
@@ -303,7 +303,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
             }
         }
 
-        if (!$validator instanceof Validator\ValidatorInterface) {
+        if (! $validator instanceof Validator\ValidatorInterface) {
             throw new Exception\InvalidArgumentException(
                 'Invalid validator provided to addValidator; ' .
                 'must be string or Zend\Validator\ValidatorInterface'
@@ -344,7 +344,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
             if ($validatorInfo instanceof Validator\ValidatorInterface) {
                 $this->addValidator($validatorInfo, null, null, $files);
             } elseif (is_string($validatorInfo)) {
-                if (!is_int($name)) {
+                if (! is_int($name)) {
                     $this->addValidator($name, null, $validatorInfo, $files);
                 } else {
                     $this->addValidator($validatorInfo, null, null, $files);
@@ -384,7 +384,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
                                 $options = array_shift($validatorInfo);
                                 // fall-through
                             case (4 <= $argc):
-                                if (!empty($validatorInfo)) {
+                                if (! empty($validatorInfo)) {
                                     $file = array_shift($validatorInfo);
                                 }
                                 // fall-through
@@ -455,7 +455,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
         $files      = $this->getFiles($files, true, true);
         $validators = [];
         foreach ($files as $file) {
-            if (!empty($this->files[$file]['validators'])) {
+            if (! empty($this->files[$file]['validators'])) {
                 $validators += $this->files[$file]['validators'];
             }
         }
@@ -612,7 +612,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
         }
 
         if (isset($count)) {
-            if (!$validator->isValid($count['tmp_name'], $count)) {
+            if (! $validator->isValid($count['tmp_name'], $count)) {
                 $this->messages += $validator->getMessages();
             }
         }
@@ -636,11 +636,11 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
                         $tocheck = $content['tmp_name'];
                     }
 
-                    if (!$validator->isValid($tocheck, $content)) {
+                    if (! $validator->isValid($tocheck, $content)) {
                         $fileerrors += $validator->getMessages();
                     }
 
-                    if (!empty($content['options']['ignoreNoFile']) && (isset($fileerrors['fileUploadErrorNoFile']))) {
+                    if (! empty($content['options']['ignoreNoFile']) && (isset($fileerrors['fileUploadErrorNoFile']))) {
                         unset($fileerrors['fileUploadErrorNoFile']);
                         break;
                     }
@@ -702,7 +702,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
      */
     public function hasErrors()
     {
-        return (!empty($this->messages));
+        return (! empty($this->messages));
     }
 
     /**
@@ -721,7 +721,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
             $filter = $this->getFilterManager()->get($filter, $options);
         }
 
-        if (!$filter instanceof Filter\FilterInterface) {
+        if (! $filter instanceof Filter\FilterInterface) {
             throw new Exception\InvalidArgumentException('Invalid filter specified');
         }
 
@@ -762,7 +762,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
                 }
 
                 if (is_array($spec)) {
-                    if (!array_key_exists('filter', $spec)) {
+                    if (! array_key_exists('filter', $spec)) {
                         continue;
                     }
 
@@ -834,7 +834,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
         $files   = $this->getFiles($files, true, true);
         $filters = [];
         foreach ($files as $file) {
-            if (!empty($this->files[$file]['filters'])) {
+            if (! empty($this->files[$file]['filters'])) {
                 $filters += $this->files[$file]['filters'];
             }
         }
@@ -946,11 +946,11 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
     {
         $orig = $files;
         $destination = rtrim($destination, "/\\");
-        if (!is_dir($destination)) {
+        if (! is_dir($destination)) {
             throw new Exception\InvalidArgumentException('The given destination is not a directory or does not exist');
         }
 
-        if (!is_writable($destination)) {
+        if (! is_writable($destination)) {
             throw new Exception\InvalidArgumentException('The given destination is not writeable');
         }
 
@@ -1109,7 +1109,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
      */
     public function getHash($hash = 'crc32', $files = null)
     {
-        if (!in_array($hash, hash_algos())) {
+        if (! in_array($hash, hash_algos())) {
             throw new Exception\InvalidArgumentException('Unknown hash algorithm');
         }
 
@@ -1236,7 +1236,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
         }
 
         if (class_exists('finfo', false)) {
-            if (!empty($value['options']['magicFile'])) {
+            if (! empty($value['options']['magicFile'])) {
                 ErrorHandler::start();
                 $mime = finfo_open(FILEINFO_MIME_TYPE, $value['options']['magicFile']);
                 ErrorHandler::stop();
@@ -1248,7 +1248,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
                 ErrorHandler::stop();
             }
 
-            if (!empty($mime)) {
+            if (! empty($mime)) {
                 $result = finfo_file($mime, $file);
             }
 
@@ -1276,7 +1276,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
     protected static function toByteString($size)
     {
         $sizes = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-        for ($i=0; $size >= 1024 && $i < 9; $i++) {
+        for ($i = 0; $size >= 1024 && $i < 9; $i++) {
             $size /= 1024;
         }
 
@@ -1329,15 +1329,15 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
                 $tmpdir[] = sys_get_temp_dir();
             }
 
-            if (!empty($_ENV['TMP'])) {
+            if (! empty($_ENV['TMP'])) {
                 $tmpdir[] = realpath($_ENV['TMP']);
             }
 
-            if (!empty($_ENV['TMPDIR'])) {
+            if (! empty($_ENV['TMPDIR'])) {
                 $tmpdir[] = realpath($_ENV['TMPDIR']);
             }
 
-            if (!empty($_ENV['TEMP'])) {
+            if (! empty($_ENV['TEMP'])) {
                 $tmpdir[] = realpath($_ENV['TEMP']);
             }
 
@@ -1419,7 +1419,7 @@ abstract class AbstractAdapter implements TranslatorAwareInterface
             foreach ($files as $find) {
                 $found = [];
                 foreach ($this->files as $file => $content) {
-                    if (!isset($content['name'])) {
+                    if (! isset($content['name'])) {
                         continue;
                     }
 
