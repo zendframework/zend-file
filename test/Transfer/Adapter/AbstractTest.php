@@ -96,7 +96,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $this->adapter->addValidators($validators);
         $test = $this->adapter->getValidators();
         $this->assertInternalType('array', $test);
-        $this->assertEquals(4, count($test), var_export($test, 1));
+        $this->assertCount(4, $test, var_export($test, 1));
         $count = array_shift($test);
         $this->assertInstanceOf(Validator\File\Count::class, $count);
         $exists = array_shift($test);
@@ -118,7 +118,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     {
         $this->adapter->addValidator('Between', false, ['min' => 1, 'max' => 5], 'foo');
         $validators = $this->adapter->getValidators('foo');
-        $this->assertEquals(1, count($validators));
+        $this->assertCount(1, $validators);
         $validator = array_shift($validators);
         $this->assertInstanceOf(Validator\Between::class, $validator);
     }
@@ -154,7 +154,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $this->testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoader();
         $validators = $this->adapter->getValidators();
         $this->assertInternalType('array', $validators);
-        $this->assertEquals(4, count($validators));
+        $this->assertCount(4, $validators);
         foreach ($validators as $validator) {
             $this->assertInstanceOf(Validator\ValidatorInterface::class, $validator);
         }
@@ -193,7 +193,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $this->adapter->clearValidators();
         $validators = $this->adapter->getValidators();
         $this->assertInternalType('array', $validators);
-        $this->assertEquals(0, count($validators));
+        $this->assertCount(0, $validators);
     }
 
     public function testValidationShouldReturnTrueForValidTransfer()
@@ -222,7 +222,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     {
         $messages = $this->adapter->getMessages();
         $this->assertInternalType('array', $messages);
-        $this->assertEquals(0, count($messages));
+        $this->assertCount(0, $messages);
     }
 
     public function testErrorMessagesShouldBePopulatedAfterInvalidTransfer()
@@ -237,7 +237,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     {
         $errors = $this->adapter->getErrors();
         $this->assertInternalType('array', $errors);
-        $this->assertEquals(0, count($errors));
+        $this->assertCount(0, $errors);
     }
 
     public function testErrorCodesShouldBePopulatedAfterInvalidTransfer()
@@ -292,7 +292,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $this->adapter->addFilters($filters);
         $test = $this->adapter->getFilters();
         $this->assertInternalType('array', $test);
-        $this->assertEquals(3, count($test), var_export($test, 1));
+        $this->assertCount(3, $test, var_export($test, 1));
         $count = array_shift($test);
         $this->assertInstanceOf(Filter\Word\SeparatorToCamelCase::class, $count);
         $size = array_shift($test);
@@ -311,7 +311,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     {
         $this->adapter->addFilter('Boolean', 1, 'foo');
         $filters = $this->adapter->getFilters('foo');
-        $this->assertEquals(1, count($filters));
+        $this->assertCount(1, $filters);
         $filter = array_shift($filters);
         $this->assertInstanceOf(Filter\Boolean::class, $filter);
     }
@@ -347,7 +347,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $this->testAdapterShouldAllowAddingMultipleFiltersAtOnceUsingBothInstancesAndPluginLoader();
         $filters = $this->adapter->getFilters();
         $this->assertInternalType('array', $filters);
-        $this->assertEquals(3, count($filters));
+        $this->assertCount(3, $filters);
         foreach ($filters as $filter) {
             $this->assertInstanceOf(Filter\FilterInterface::class, $filter);
         }
@@ -386,7 +386,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $this->adapter->clearFilters();
         $filters = $this->adapter->getFilters();
         $this->assertInternalType('array', $filters);
-        $this->assertEquals(0, count($filters));
+        $this->assertCount(0, $filters);
     }
 
     public function testTransferDestinationShouldBeMutable()
@@ -450,14 +450,14 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     public function testGetAllAdditionalFileInfos()
     {
         $files = $this->adapter->getFileInfo();
-        $this->assertEquals(5, count($files));
+        $this->assertCount(5, $files);
         $this->assertEquals('baz.text', $files['baz']['name']);
     }
 
     public function testGetAdditionalFileInfosForSingleFile()
     {
         $files = $this->adapter->getFileInfo('baz');
-        $this->assertEquals(1, count($files));
+        $this->assertCount(1, $files);
         $this->assertEquals('baz.text', $files['baz']['name']);
     }
 
@@ -635,25 +635,25 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $this->adapter->addValidators($validators, 'foo'); // set validators to 'foo'
 
         $test = $this->adapter->getValidators();
-        $this->assertEquals(3, count($test));
+        $this->assertCount(3, $test);
 
         //test files specific validators
         $test = $this->adapter->getValidators('foo');
-        $this->assertEquals(2, count($test));
+        $this->assertCount(2, $test);
         $mimeType = array_shift($test);
         $this->assertInstanceOf(Validator\File\MimeType::class, $mimeType);
         $filesSize = array_shift($test);
         $this->assertInstanceOf(Validator\File\FilesSize::class, $filesSize);
 
         $test = $this->adapter->getValidators('bar');
-        $this->assertEquals(2, count($test));
+        $this->assertCount(2, $test);
         $filesSize = array_shift($test);
         $this->assertInstanceOf(Validator\File\Count::class, $filesSize);
         $mimeType = array_shift($test);
         $this->assertInstanceOf(Validator\File\MimeType::class, $mimeType);
 
         $test = $this->adapter->getValidators('baz');
-        $this->assertEquals(0, count($test));
+        $this->assertCount(0, $test);
     }
 
     /**
