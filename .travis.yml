@@ -46,15 +46,11 @@ matrix:
       env:
         - ZEND_SERVICEMANAGER_VERSION="^2.7.5"
     - php: hhvm
-    - php: hhvm 
+    - php: hhvm
       env:
         - ZEND_SERVICEMANAGER_VERSION="^2.7.5"
   allow_failures:
     - php: hhvm
-
-notifications:
-  irc: "irc.freenode.org#zftalk.dev"
-  email: false
 
 before_install:
   - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
@@ -76,3 +72,16 @@ after_success:
 
 after_script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer upload-coverage ; fi
+
+notifications:
+  email: false
+  irc:
+    channels:
+      - "irc.freenode.org#zftalk.dev"
+    on_success: change
+    on_failure: always
+  slack:
+    rooms:
+      - secure: "NFRJJJPdQ8VmxRbejIsV1bk1DMTx9LEyl6vXMool9Vm8VLrSC0PHdsKYaHvrPG1CqwrHjxGeS4JL5FhLjh8rv13jIQUFT3qoKabXzA9afIMX3OAMF7MF3DKMmfzjp3x6G/zMwIH4Tps16d088k09K+Q1Mdr8Ko2wcx/fjDcsRQMgOJA6gCsg0FjTjJpuwzJCfaFcYJEJbm5RJRgSFcHeUd3J9yGjxCp6nrmOo7skflWaqxy3wAH1Pd6K3Cr966yTKiRl6Z7E0UC/zrcpC6LBqipMQDMJTlsFMEb0lMCm27MXdBEfroXP2KRkmLJuA+q6vb1wm+oXPwJ0DYn3oCbc8nFQK2EHrYSCMn2oplXKlUS2SQscVWuegypy4TbCBnAH3J12D1sLCft/qyCR36Ji9wPv00fXccxHO8xgssLHaBnyuflmjlNUlYWijElnzyjXsAn75I2fWg92FXZ3NXyn1oLc4bZG9vXCNa7a/KN+aRgXQwIEV/vRqO8ddJE0XDSlXDocRbLVylgc4wK7iyxvaEa/z6+ptLRqnNsVqida3klMyWordgwqyyHgdcFMiDtd1y2BL1aeLDf40l6aYoPFAm60W4W/wcfYFHI6aT1edsAFsFl34xmqPi/fNtx2CG9VxiSWxfIUvwZceG4gSO8pOk/LlenKr+Ars/aom8bBsgE="
+    on_success: change
+    on_failure: always
