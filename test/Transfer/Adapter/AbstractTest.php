@@ -10,6 +10,7 @@
 namespace ZendTest\File\Transfer\Adapter;
 
 use Interop\Container\ContainerInterface;
+use PHPUnit\Framework;
 use stdClass;
 use Zend\File;
 use Zend\Filter;
@@ -21,7 +22,7 @@ use Zend\Validator\File as FileValidator;
  *
  * @group      Zend_File
  */
-class AbstractTest extends \PHPUnit_Framework_TestCase
+class AbstractTest extends Framework\TestCase
 {
     /**
      * Sets up the fixture, for example, open a network connection.
@@ -75,10 +76,9 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testAdapterhShouldRaiseExceptionWhenAddingInvalidValidatorType()
     {
-        $this->setExpectedException(
-            File\Transfer\Exception\InvalidArgumentException::class,
-            'Invalid validator provided to addValidator'
-        );
+        $this->expectException(File\Transfer\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid validator provided to addValidator');
+
         $this->adapter->addValidator(new Filter\BaseName);
     }
 
@@ -272,10 +272,9 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testAdapterhShouldRaiseExceptionWhenAddingInvalidFilterType()
     {
-        $this->setExpectedException(
-            File\Transfer\Exception\InvalidArgumentException::class,
-            'Invalid filter specified'
-        );
+        $this->expectException(File\Transfer\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid filter specified');
+
         $this->adapter->addFilter(new stdClass());
     }
 
@@ -463,10 +462,9 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAdditionalFileInfosForUnknownFile()
     {
-        $this->setExpectedException(
-            File\Transfer\Exception\RuntimeException::class,
-            'The file transfer adapter can not find "unknown"'
-        );
+        $this->expectException(File\Transfer\Exception\RuntimeException::class);
+        $this->expectExceptionMessage('The file transfer adapter can not find "unknown"');
+
         $files = $this->adapter->getFileInfo('unknown');
     }
 
@@ -508,7 +506,9 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testExceptionForUnknownHashValue()
     {
-        $this->setExpectedException(File\Transfer\Exception\InvalidArgumentException::class, 'Unknown hash algorithm');
+        $this->expectException(File\Transfer\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown hash algorithm');
+
         $this->adapter->getHash('foo', 'unknown_hash');
     }
 
@@ -541,7 +541,9 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testFileSizeButNoFileFound()
     {
-        $this->setExpectedException(File\Transfer\Exception\InvalidArgumentException::class, 'does not exist');
+        $this->expectException(File\Transfer\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('does not exist');
+
         $this->assertEquals(10, $this->adapter->getFileSize());
     }
 
@@ -566,7 +568,9 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testMimeTypeButNoFileFound()
     {
-        $this->setExpectedException(File\Transfer\Exception\InvalidArgumentException::class, 'does not exist');
+        $this->expectException(File\Transfer\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('does not exist');
+
         $this->assertEquals('image/jpeg', $this->adapter->getMimeType());
     }
 
@@ -593,7 +597,9 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $message = $this->adapter->getMessages();
         $this->assertContains('Zu wenige', $message);
 
-        $this->setExpectedException(File\Transfer\Exception\InvalidArgumentException::class, 'does not exist');
+        $this->expectException(File\Transfer\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('does not exist');
+
         $this->assertEquals('image/jpeg', $this->adapter->getMimeType());
     }
 
@@ -603,7 +609,9 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
         $this->adapter->setDestination($directory, 'nonexisting');
         $this->assertEquals($directory, $this->adapter->getDestination('nonexisting'));
 
-        $this->setExpectedException(File\Transfer\Exception\InvalidArgumentException::class, 'not find');
+        $this->expectException(File\Transfer\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('not find');
+
         $this->assertInternalType('string', $this->adapter->getDestination('reallynonexisting'));
     }
 

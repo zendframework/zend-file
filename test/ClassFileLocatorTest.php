@@ -9,6 +9,7 @@
 
 namespace ZendTest\File;
 
+use PHPUnit\Framework;
 use Zend\File\ClassFileLocator;
 use Zend\File\Exception;
 use Zend\File\PhpClassFile;
@@ -18,18 +19,21 @@ use Zend\File\PhpClassFile;
  *
  * @group      Zend_File
  */
-class ClassFileLocatorTest extends \PHPUnit_Framework_TestCase
+class ClassFileLocatorTest extends Framework\TestCase
 {
     public function testConstructorThrowsInvalidArgumentExceptionForInvalidStringDirectory()
     {
-        $this->setExpectedException(Exception\InvalidArgumentException::class);
+        $this->expectException(Exception\InvalidArgumentException::class);
+
         $locator = new ClassFileLocator('__foo__');
     }
 
     public function testConstructorThrowsInvalidArgumentExceptionForNonDirectoryIteratorArgument()
     {
         $iterator = new \ArrayIterator([]);
-        $this->setExpectedException(Exception\InvalidArgumentException::class);
+
+        $this->expectException(Exception\InvalidArgumentException::class);
+
         $locator = new ClassFileLocator($iterator);
     }
 
