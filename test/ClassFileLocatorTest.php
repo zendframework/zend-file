@@ -177,4 +177,30 @@ class ClassFileLocatorTest extends TestCase
 
         $this->assertEquals($expected, $classNames);
     }
+
+    /**
+     * @requires PHP 7.1
+     */
+    public function testIgnoresMethodsNamedAfterKeywords()
+    {
+        $classFileLocator = new ClassFileLocator(__DIR__ . '/TestAsset/WithMethodsNamedAfterKeywords');
+
+        $classFiles = \iterator_to_array($classFileLocator);
+
+        $this->assertCount(2, $classFiles);
+
+        $classNames = \array_reduce($classFiles, function (array $classNames, PhpClassFile $classFile) {
+            return \array_merge(
+                $classNames,
+                $classFile->getClasses()
+            );
+        }, []);
+
+        $expected = [
+            TestAsset\WithMethodsNamedAfterKeywords\WithoutReturnTypeDeclaration::class,
+            TestAsset\WithMethodsNamedAfterKeywords\WithReturnTypeDeclaration::class,
+        ];
+
+        $this->assertEquals($expected, $classNames, '', 0.0, 10, true);
+    }
 }
