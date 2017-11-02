@@ -10,7 +10,7 @@
 namespace ZendTest\File\Transfer\Adapter;
 
 use Interop\Container\ContainerInterface;
-use PHPUnit\Framework;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 use Zend\File;
 use Zend\Filter;
@@ -22,7 +22,7 @@ use Zend\Validator\File as FileValidator;
  *
  * @group      Zend_File
  */
-class AbstractTest extends Framework\TestCase
+class AbstractTest extends TestCase
 {
     /**
      * Sets up the fixture, for example, open a network connection.

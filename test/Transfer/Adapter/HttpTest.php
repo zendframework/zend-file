@@ -9,7 +9,7 @@
 
 namespace ZendTest\File\Transfer\Adapter;
 
-use PHPUnit\Framework;
+use PHPUnit\Framework\TestCase;
 use Zend\File\Transfer\Adapter;
 use Zend\File\Transfer\Exception\BadMethodCallException;
 use Zend\File\Transfer\Exception\RuntimeException;
@@ -21,7 +21,7 @@ use Zend\Validator;
  *
  * @group      Zend_File
  */
-class HttpTest extends Framework\TestCase
+class HttpTest extends TestCase
 {
     /**
      * Sets up the fixture, for example, open a network connection.

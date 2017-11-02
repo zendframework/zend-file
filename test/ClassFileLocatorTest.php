@@ -9,7 +9,7 @@
 
 namespace ZendTest\File;
 
-use PHPUnit\Framework;
+use PHPUnit\Framework\TestCase;
 use Zend\File\ClassFileLocator;
 use Zend\File\Exception;
 use Zend\File\PhpClassFile;
@@ -19,7 +19,7 @@ use Zend\File\PhpClassFile;
  *
  * @group      Zend_File
  */
-class ClassFileLocatorTest extends Framework\TestCase
+class ClassFileLocatorTest extends TestCase
 {
     public function testConstructorThrowsInvalidArgumentExceptionForInvalidStringDirectory()
     {
