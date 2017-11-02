@@ -80,7 +80,7 @@ class HttpTest extends Framework\TestCase
     public function testFileIsSent()
     {
         $this->expectException(BadMethodCallException::class, 'not implemented');
-        
+
         $this->adapter->isSent();
     }
 
