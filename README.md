@@ -7,4 +7,4 @@ zend-file provides a `ClassFileLocator` for locating PHP files containing
 classes, abstract classes, interfaces, and traits in a specified tree.
 
 - File issues at https://github.com/zendframework/zend-file/issues
-- Documentation is at https://zendframework.github.io/zend-file/
+- Documentation is at https://docs.zendframework.com/zend-file/
