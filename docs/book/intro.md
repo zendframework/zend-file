@@ -10,7 +10,7 @@ zend-file provides two specific pieces of functionality:
 **The `Transfer` subcomponent is deprecated**, and we recommend using the
 file-related functionality in:
 
-- [zend-filter](https://zendframework.github.io/zend-filter/), which provides
+- [zend-filter](https://docs.zendframework.com/zend-filter/), which provides
   functionality around moving uplaoded files to their final locations, renaming
   uploaded files, and encrypting and decrypting uploaded files.
 - [zend-validator](https://github.com/zendframework/zend-validator/), which
