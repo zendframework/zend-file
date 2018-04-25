@@ -24,7 +24,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#41](https://github.com/zendframework/zend-file/pull/41) fixes an issue in PHP 7.1 and up with false-positive detection of classes,
+  interfaces, and traits when class methods are named after these keywords.
 
 ## 2.7.1 - 2017-01-11
 
