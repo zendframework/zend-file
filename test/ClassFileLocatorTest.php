@@ -1,35 +1,32 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2017 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/zendframework/zend-file for the canonical source repository
+ * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
+ * @license   https://github.com/zendframework/zend-file/blob/master/LICENSE.md New BSD License
  */
 
 namespace ZendTest\File;
 
+use PHPUnit\Framework\TestCase;
 use Zend\File\ClassFileLocator;
 use Zend\File\Exception;
 use Zend\File\PhpClassFile;
 
-/**
- * Test class for Zend\File\ClassFileLocator
- *
- * @group      Zend_File
- */
-class ClassFileLocatorTest extends \PHPUnit_Framework_TestCase
+class ClassFileLocatorTest extends TestCase
 {
     public function testConstructorThrowsInvalidArgumentExceptionForInvalidStringDirectory()
     {
-        $this->setExpectedException(Exception\InvalidArgumentException::class);
+        $this->expectException(Exception\InvalidArgumentException::class);
+
         $locator = new ClassFileLocator('__foo__');
     }
 
     public function testConstructorThrowsInvalidArgumentExceptionForNonDirectoryIteratorArgument()
     {
         $iterator = new \ArrayIterator([]);
-        $this->setExpectedException(Exception\InvalidArgumentException::class);
+
+        $this->expectException(Exception\InvalidArgumentException::class);
+
         $locator = new ClassFileLocator($iterator);
     }
 
@@ -172,5 +169,31 @@ class ClassFileLocatorTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->assertEquals($expected, $classNames);
+    }
+
+    /**
+     * @requires PHP 7.1
+     */
+    public function testIgnoresMethodsNamedAfterKeywords()
+    {
+        $classFileLocator = new ClassFileLocator(__DIR__ . '/TestAsset/WithMethodsNamedAfterKeywords');
+
+        $classFiles = \iterator_to_array($classFileLocator);
+
+        $this->assertCount(2, $classFiles);
+
+        $classNames = \array_reduce($classFiles, function (array $classNames, PhpClassFile $classFile) {
+            return \array_merge(
+                $classNames,
+                $classFile->getClasses()
+            );
+        }, []);
+
+        $expected = [
+            TestAsset\WithMethodsNamedAfterKeywords\WithoutReturnTypeDeclaration::class,
+            TestAsset\WithMethodsNamedAfterKeywords\WithReturnTypeDeclaration::class,
+        ];
+
+        $this->assertEquals($expected, $classNames, '', 0.0, 10, true);
     }
 }

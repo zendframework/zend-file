@@ -2,9 +2,13 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.7.2 - TBD
+## 2.8.0 - TBD
 
 ### Added
+
+- [#43](https://github.com/zendframework/zend-file/pull/43) adds support for PHP 7.1 and 7.2.
+
+### Changed
 
 - Nothing.
 
@@ -14,11 +18,14 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- [#43](https://github.com/zendframework/zend-file/pull/43) removes support for PHP 5.5.
+
+- [#43](https://github.com/zendframework/zend-file/pull/43) removes support for HHVM.
 
 ### Fixed
 
-- Nothing.
+- [#41](https://github.com/zendframework/zend-file/pull/41) fixes an issue in PHP 7.1 and up with false-positive detection of classes,
+  interfaces, and traits when class methods are named after these keywords.
 
 ## 2.7.1 - 2017-01-11
 

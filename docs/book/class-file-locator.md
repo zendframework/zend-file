@@ -26,7 +26,7 @@ instances, the `ClassFileLocator` is configured to cast to
 following additional methods:
 
 - `getClasses()`: returns an array of all classes, abstract classes, interfaces,
-  and traits defined in the file; all names are fully qualified. 
+  and traits defined in the file; all names are fully qualified.
 - `getNamespaces()`: returns an array of namespaces defined in the file.
 
 > ### Tokenization
