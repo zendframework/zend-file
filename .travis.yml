@@ -2,80 +2,75 @@ sudo: false
 
 language: php
 
-branches:
-  except:
-    - /^release-\d+\.\d+\.\d+.*$/
-    - /^ghgfk-.*$/
-
 cache:
   directories:
     - $HOME/.composer/cache
-    - $HOME/.local
-    - zf-mkdoc-theme
 
 env:
   global:
-    - SITE_URL: https://zendframework.github.io/zend-file
-    - GH_USER_NAME: "Matthew Weier O'Phinney"
-    - GH_USER_EMAIL: matthew@weierophinney.net
-    - GH_REF: github.com/zendframework/zend-file.git
-    - secure: "ULsxLLRxxpphEwpOfpTWzW85g8LLoCsa9M5g2fiWlKhvl+FjfvSTkMmDHCzNq6QSfASpI+MTyZBxj34v8Fqq/U82IXCfoHP1mFYw//5qg6Xm28nVz48chjjCD5eIzKNI6vIdY+S+mhstcAkl3AqXAczsIxK34B6BZQxWOUUnDAn/jJ2bPpyiI/laePt76jel8xeMjNYrnIV9VvwsK9klttEOifMyK1pnGgTf8OvPD4WNaaiFLroE1JGFJJrbnColabFjXIQbKRupGpNp/Cz6Nn0M3I8Da1sSa1zeq4485c2eR61rJ7HXUX769wvPakDgrMjAGcIZGwvzfPqD0ldefXU2gsRpom4p7wUxQGndyQAF3ytUFn5QBz8TRPQ1AIT2uIsd3dblvqFn17HAPSKNihX4F9xkSogp/D5znYYwrZ3hrjZRY9idRJqDYkDV2/VTu1RiKI/SukPj2wTLxQwZttxHFhJapjKDzJ289TekA2ShBewCNR+3gl9uetzb0ir4C8l3TWo40fBjG8SMxan4y48EdOetAoWwjnigTnR0aXA/Mgm0Ly/ide1Xuho12P/cj54EWdmE+5LTUd70O0oBp0sLRZG6S3Wz0jRy4Z7XvbXCaoIBXHcmFjPOyfcmjgh0BBkHM0Ir8Cwe5CgwpaMQnUjw8nRDdG+TC62UczOyoHo="
+    - COMPOSER_ARGS="--no-interaction"
+    - COVERAGE_DEPS="php-coveralls/php-coveralls"
 
 matrix:
   include:
-    - php: 5.5
+    - php: 5.6
       env:
+        - DEPS=lowest
+    - php: 5.6
+      env:
+        - DEPS=locked
+        - LEGACY_DEPS="phpunit/phpunit"
+    - php: 5.6
+      env:
+        - DEPS=latest
+    - php: 7
+      env:
+        - DEPS=lowest
+    - php: 7
+      env:
+        - DEPS=locked
+        - LEGACY_DEPS="phpunit/phpunit"
+    - php: 7
+      env:
+        - DEPS=latest
+    - php: 7.1
+      env:
+        - DEPS=lowest
+    - php: 7.1
+      env:
+        - DEPS=locked
         - CS_CHECK=true
-    - php: 5.5
-      env:
-        - ZEND_SERVICEMANAGER_VERSION="^2.7.5"
-    - php: 5.6
-      env:
         - TEST_COVERAGE=true
-        - DEPLOY_DOCS="$(if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then echo -n 'true' ; else echo -n 'false' ; fi)"
-        - PATH="$HOME/.local/bin:$PATH"
-    - php: 5.6
-      env:
-        - ZEND_SERVICEMANAGER_VERSION="^2.7.5"
-    - php: 7.0
-    - php: 7.0
-      env:
-        - ZEND_SERVICEMANAGER_VERSION="^2.7.5"
-    - php: 7.1
     - php: 7.1
       env:
-        - ZEND_SERVICEMANAGER_VERSION="^2.7.5"
+        - DEPS=latest
+    - php: 7.2
+      env:
+        - DEPS=lowest
+    - php: 7.2
+      env:
+        - DEPS=locked
+    - php: 7.2
+      env:
+        - DEPS=latest
 
 before_install:
   - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
-  - composer self-update
-  - if [[ $TEST_COVERAGE == 'true' ]]; then composer require --dev --no-update satooshi/php-coveralls ; fi
-  - if [[ $ZEND_SERVICEMANAGER_VERSION != '' ]]; then composer require --dev --no-update "zendframework/zend-servicemanager:$ZEND_SERVICEMANAGER_VERSION" ; fi
-  - if [[ $ZEND_SERVICEMANAGER_VERSION == '' ]]; then composer require --dev --no-update "zendframework/zend-servicemanager:^3.0.3" ; fi
 
 install:
-  - travis_retry composer install --no-interaction --ignore-platform-reqs
+  - travis_retry composer install $COMPOSER_ARGS --ignore-platform-reqs
+  - if [[ $LEGACY_DEPS != '' ]]; then travis_retry composer update $COMPOSER_ARGS --with-dependencies $LEGACY_DEPS ; fi
+  - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
+  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer require --dev $COMPOSER_ARGS $COVERAGE_DEPS ; fi
+  - stty cols 120 && composer show
 
 script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
   - if [[ $CS_CHECK == 'true' ]]; then composer cs-check ; fi
-  - if [[ $DEPLOY_DOCS == "true" && "$TRAVIS_TEST_RESULT" == "0" ]]; then wget -O theme-installer.sh "https://raw.githubusercontent.com/zendframework/zf-mkdoc-theme/master/theme-installer.sh" ; chmod 755 theme-installer.sh ; ./theme-installer.sh ; fi
-
-after_success:
-  - if [[ $DEPLOY_DOCS == "true" ]]; then echo "Preparing to build and deploy documentation" ; ./zf-mkdoc-theme/deploy.sh ; echo "Completed deploying documentation" ; fi
 
 after_script:
-  - if [[ $TEST_COVERAGE == 'true' ]]; then composer upload-coverage ; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry php vendor/bin/php-coveralls -v ; fi
 
 notifications:
   email: false
-  irc:
-    channels:
-      - "irc.freenode.org#zftalk.dev"
-    on_success: change
-    on_failure: always
-  slack:
-    rooms:
-      - secure: "NFRJJJPdQ8VmxRbejIsV1bk1DMTx9LEyl6vXMool9Vm8VLrSC0PHdsKYaHvrPG1CqwrHjxGeS4JL5FhLjh8rv13jIQUFT3qoKabXzA9afIMX3OAMF7MF3DKMmfzjp3x6G/zMwIH4Tps16d088k09K+Q1Mdr8Ko2wcx/fjDcsRQMgOJA6gCsg0FjTjJpuwzJCfaFcYJEJbm5RJRgSFcHeUd3J9yGjxCp6nrmOo7skflWaqxy3wAH1Pd6K3Cr966yTKiRl6Z7E0UC/zrcpC6LBqipMQDMJTlsFMEb0lMCm27MXdBEfroXP2KRkmLJuA+q6vb1wm+oXPwJ0DYn3oCbc8nFQK2EHrYSCMn2oplXKlUS2SQscVWuegypy4TbCBnAH3J12D1sLCft/qyCR36Ji9wPv00fXccxHO8xgssLHaBnyuflmjlNUlYWijElnzyjXsAn75I2fWg92FXZ3NXyn1oLc4bZG9vXCNa7a/KN+aRgXQwIEV/vRqO8ddJE0XDSlXDocRbLVylgc4wK7iyxvaEa/z6+ptLRqnNsVqida3klMyWordgwqyyHgdcFMiDtd1y2BL1aeLDf40l6aYoPFAm60W4W/wcfYFHI6aT1edsAFsFl34xmqPi/fNtx2CG9VxiSWxfIUvwZceG4gSO8pOk/LlenKr+Ars/aom8bBsgE="
-    on_success: change
-    on_failure: always

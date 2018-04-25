@@ -9,6 +9,7 @@
 
 namespace ZendTest\File\Transfer\Adapter;
 
+use PHPUnit\Framework\TestCase;
 use Zend\File\Transfer\Adapter;
 use Zend\File\Transfer\Exception\BadMethodCallException;
 use Zend\File\Transfer\Exception\RuntimeException;
@@ -20,7 +21,7 @@ use Zend\Validator;
  *
  * @group      Zend_File
  */
-class HttpTest extends \PHPUnit_Framework_TestCase
+class HttpTest extends TestCase
 {
     /**
      * Sets up the fixture, for example, open a network connection.
@@ -71,13 +72,15 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 
     public function testSendingFiles()
     {
-        $this->setExpectedException(BadMethodCallException::class, 'not implemented');
+        $this->expectException(BadMethodCallException::class, 'not implemented');
+
         $this->adapter->send();
     }
 
     public function testFileIsSent()
     {
-        $this->setExpectedException(BadMethodCallException::class, 'not implemented');
+        $this->expectException(BadMethodCallException::class, 'not implemented');
+
         $this->adapter->isSent();
     }
 
