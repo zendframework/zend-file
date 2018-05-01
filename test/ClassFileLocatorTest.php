@@ -196,4 +196,17 @@ class ClassFileLocatorTest extends TestCase
 
         $this->assertEquals($expected, $classNames, '', 0.0, 10, true);
     }
+
+    public function testIterationFindsClassInAFileWithUseFunction()
+    {
+        $locator = new ClassFileLocator(__DIR__);
+        $found = false;
+
+        foreach ($locator as $file) {
+            if (preg_match('/ContainsUseFunction\.php$/', $file->getFilename())) {
+                $found = true;
+            }
+        }
+        $this->assertTrue($found, "Failed to find a file that contains `use function`");
+    }
 }

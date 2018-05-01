@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#44](https://github.com/zendframework/zend-file/pull/44) fixes an issue where ClassFileLocator would skip the file (otherwise valid class file) containing `use function`
 
 ## 2.8.0 - 2018-04-25
 

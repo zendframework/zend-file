@@ -126,7 +126,10 @@ class ClassFileLocator extends FilterIterator
                     }
                     break;
                 case T_FUNCTION:
-                    $inFunctionDeclaration = true;
+                    // `use function` should not enter function context
+                    if ($i < 2 || ! is_array($tokens[$i - 2]) || $tokens[$i - 2][0] !== T_USE) {
+                        $inFunctionDeclaration = true;
+                    }
                     break;
                 case T_TRAIT:
                 case T_CLASS:
