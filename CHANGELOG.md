@@ -24,7 +24,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
-## 2.8.1 - TBD
+## 2.8.1 - 2018-05-01
 
 ### Added
 
@@ -44,7 +44,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#44](https://github.com/zendframework/zend-file/pull/44) fixes an issue where
+  ClassFileLocator would skip the file (otherwise valid class file) containing a
+  `use function` declaration.
 
 ## 2.8.0 - 2018-04-25
 
