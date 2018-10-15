@@ -22,7 +22,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#45](https://github.com/zendframework/zend-file/pull/45) fixes compatibility
+  issue with php 7.3 with deprecated continue keyword usage in switch statements
 
 ## 2.8.1 - 2018-05-01
 
