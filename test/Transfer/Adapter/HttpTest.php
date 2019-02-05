@@ -334,6 +334,6 @@ class HttpTest extends TestCase
         $_FILES = [];
         $adapter = new HttpTestMockAdapter();
         $this->assertFalse($adapter->isValidParent());
-        $this->assertContains('exceeds the defined ini size', current($adapter->getMessages()));
+        $this->assertContains('exceeds', current($adapter->getMessages()));
     }
 }
