@@ -24,7 +24,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
-## 2.8.3 - TBD
+## 2.8.3 - 2019-02-06
 
 ### Added
 
@@ -44,7 +44,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#46](https://github.com/zendframework/zend-file/pull/46) fixes a unit test assertion for `Zend\File\Transfer\Adapter\Http`.
 
 ## 2.8.2 - 2018-10-15
 
