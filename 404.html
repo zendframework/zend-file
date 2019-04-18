@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="zend-file">  
-    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="shortcut icon" href="//img/favicon.ico">
 
-    <title>ClassFileLocator - zend-file - Zend Framework Docs</title>
+    <title>zend-file - Zend Framework Docs</title>
 
-    <link rel="stylesheet" href="../css/styles-f3b53f5ceb.css">
+    <link rel="stylesheet" href="//css/styles-f3b53f5ceb.css">
 </head>
 <body id="page-top">
 
@@ -31,7 +31,7 @@
             
             <span class="navbar-brand">
                 <a class="logo-link" href="https://framework.zend.com/" data-tooltip data-placement="bottom" title="Go to the ZF homepage">
-                    <img src="../img/zend-framework-logo.svg" height="28" alt="Zend Framework">
+                    <img src="//img/zend-framework-logo.svg" height="28" alt="Zend Framework">
                 </a>
             </span>
         </div>
@@ -66,7 +66,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="..">zend-file</a>
+            <a href="/.">zend-file</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -75,19 +75,19 @@
             
                 
                     <li class="subnavigation__list-item ">
-                        <a href=".." class="subnavigation__link">zend-file</a>
+                        <a href="/." class="subnavigation__link">zend-file</a>
                     </li>
                 
             
                 
                     <li class="subnavigation__list-item ">
-                        <a href="../intro/" class="subnavigation__link">Intro</a>
+                        <a href="/intro/" class="subnavigation__link">Intro</a>
                     </li>
                 
             
                 
-                    <li class="subnavigation__list-item subnavigation__list-item--active">
-                        <a href="./" class="subnavigation__link">ClassFileLocator</a>
+                    <li class="subnavigation__list-item ">
+                        <a href="/class-file-locator/" class="subnavigation__link">ClassFileLocator</a>
                     </li>
                 
             
@@ -160,132 +160,18 @@
             <div class="col-md-9 col-xs-12 content" role="main">
             <!-- content:begin -->
                 
-                    <ol class="breadcrumb" role="navigation" aria-label="breadcrumbs navigation">
-    <li><a href="https://framework.zend.com/">Home</a></li>
 
-    
-        <li><a href="https://docs.zendframework.com/">Documentation</a></li>
-
-        
-            <li><a href="..">zend-file</a></li>
-
-            
-
-            <li class="active">ClassFileLocator</li>
-        
-    
-</ol>
-
-
-    
-
-    
-    
-
-    
-    
-        <div class="toc">
-            <h6 class="toc__headline">In This Article</h6>
-            <ul class="toc__list">
-                
-                    <li class="toc__entry">
-                        <a href="#usage" class="toc__link">Usage</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#example" class="toc__link">Example</a>
-                    </li>
-                
-            </ul>
-        </div>
-    
-
-
-    <h1 id="classfilelocator">ClassFileLocator</h1>
-<p><code>Zend\File\ClassFileLocator</code> is a PHP <a href="http://php.net/FilterIterator">FilterIterator</a>
-for use with locating files containing PHP classes, interfaces, abstracts, or
-traits. As such, it should be used in conjunction with a
-<a href="http://php.net/DirectoryIterator">DirectoryIterator</a> or
-<a href="http://php.net/RecursiveDirectoryIterator">RecursiveDirectoryIterator</a>.</p>
-<p>Use cases include building class maps for autoloading.</p>
-<h2 id="usage">Usage</h2>
-<p>The <code>ClassFileLocator</code> constructor can take one of:</p>
-<ul>
-<li>a string representing a directory location; if valid, this will be used to
-  seed a <code>RecursiveDirectoryIterator</code> instance.</li>
-<li>a <code>DirectoryIterator</code> instance.</li>
-<li>a <code>RecursiveDirectoryIterator</code> instance.</li>
-</ul>
-<p>In each case, once constructed, iteration will result in a list of files
-containing PHP clases, interfaces, abstracts, or traits.</p>
-<p>Instead of returning standard <a href="http://php.net/SplFileInfo">SplFileInfo</a>
-instances, the <code>ClassFileLocator</code> is configured to cast to
-<code>Zend\File\PhpClassFile</code> instances, which extend <code>SplFileInfo</code>, and provide the
-following additional methods:</p>
-<ul>
-<li><code>getClasses()</code>: returns an array of all classes, abstract classes, interfaces,
-  and traits defined in the file; all names are fully qualified.</li>
-<li><code>getNamespaces()</code>: returns an array of namespaces defined in the file.</li>
-</ul>
+<h1 class="content__title">404</h1>
 <blockquote>
-<h3 id="tokenization">Tokenization</h3>
-<p>The <code>ClassFileLocator</code> uses the <a href="http://php.net/tokenizer">tokenizer</a>
-extension in order to locate items of interest; as such, its operations
-will not execute PHP files it finds.</p>
+    <h3>Something went wrong!</h3>
+    <p>
+        We're sorry, but the page you are looking for does not exist.
+    </p>
 </blockquote>
-<h2 id="example">Example</h2>
-<p>The following will spit out a PHP file that returns a class map for the <code>src/</code>
-directory in which it is run:</p>
-<pre class="codehilite"><code class="language-php">&lt;?php
-use Zend\File\ClassFileLocator;
 
-$path = realpath(getcwd() . '/src');
-
-$locator = new ClassFileLocator($path);
-$map = [];
-
-foreach ($locator as $file) {
-    $filename = str_replace($path . '/', '', $file-&gt;getRealPath());
-    foreach ($file-&gt;getClasses() as $class) {
-        $map[$class] = $filename;
-    }
-}
-
-printf("&lt;?php\nreturn %s;", var_export($map, true));</code></pre>
+<a href="/" class="btn btn-default" role="button">Go to homepage</a>
 
 
-
-    <nav>
-    <ul class="page-nav hidden-print">
-
-        
-        <li class="page-nav__item">
-            
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../intro/">
-                    <i class="fa fa-chevron-left"></i> Previous
-                </a>
-            
-        </li>
-
-        
-        <li class="page-nav__item">
-            
-        </li>
-    </ul>
-</nav>
-
-
-
-    <div class="help-wanted">
-        <p>
-            Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-file/edit/master/docs/book/class-file-locator.md" target="_blank" class="help-wanted__link">
-                Edit this page on GitHub!
-            </a>
-        </p>
-    </div>
-
-                
             <!-- content:end -->
             </div>
             <div class="col-md-3 col-xs-12 sidebar">
@@ -301,7 +187,7 @@ printf("&lt;?php\nreturn %s;", var_export($map, true));</code></pre>
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="..">zend-file</a>
+            <a href="/.">zend-file</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -310,19 +196,19 @@ printf("&lt;?php\nreturn %s;", var_export($map, true));</code></pre>
             
                 
                     <li class="subnavigation__list-item ">
-                        <a href=".." class="subnavigation__link">zend-file</a>
+                        <a href="/." class="subnavigation__link">zend-file</a>
                     </li>
                 
             
                 
                     <li class="subnavigation__list-item ">
-                        <a href="../intro/" class="subnavigation__link">Intro</a>
+                        <a href="/intro/" class="subnavigation__link">Intro</a>
                     </li>
                 
             
                 
-                    <li class="subnavigation__list-item subnavigation__list-item--active">
-                        <a href="./" class="subnavigation__link">ClassFileLocator</a>
+                    <li class="subnavigation__list-item ">
+                        <a href="/class-file-locator/" class="subnavigation__link">ClassFileLocator</a>
                     </li>
                 
             
@@ -397,11 +283,11 @@ printf("&lt;?php\nreturn %s;", var_export($map, true));</code></pre>
 </footer>
 
     <script>
-        var base_url = '..',
+        var base_url = '/',
             siteName = 'zend-file';
     </script>
-    <script src="../js/scripts-8d7ae56abf.js"></script>
-        <script src="../search/main.js"></script>
+    <script src="//js/scripts-8d7ae56abf.js"></script>
+        <script src="/search/main.js"></script>
 
     
     <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
