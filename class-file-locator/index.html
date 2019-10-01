@@ -262,7 +262,7 @@ following additional methods:</p>
 <li><code>getNamespaces()</code>: returns an array of namespaces defined in the file.</li>
 </ul>
 <blockquote>
-<h3 id="tokenization">Tokenization</h3>
+<h3>Tokenization</h3>
 <p>The <code>ClassFileLocator</code> uses the <a href="http://php.net/tokenizer">tokenizer</a>
 extension in order to locate items of interest; as such, its operations
 will not execute PHP files it finds.</p>
@@ -270,7 +270,7 @@ will not execute PHP files it finds.</p>
 <h2 id="example">Example</h2>
 <p>The following will spit out a PHP file that returns a class map for the <code>src/</code>
 directory in which it is run:</p>
-<pre class="codehilite"><code class="language-php">&lt;?php
+<p> <pre class=codehilite><code class=language-php>&lt;?php
 use Zend\File\ClassFileLocator;
 
 $path = realpath(getcwd() . '/src');
@@ -285,7 +285,7 @@ foreach ($locator as $file) {
     }
 }
 
-printf("&lt;?php\nreturn %s;", var_export($map, true));</code></pre>
+printf(&quot;&lt;?php\nreturn %s;&quot;, var_export($map, true));</code></pre></p>
 
 
 
@@ -315,7 +315,7 @@ printf("&lt;?php\nreturn %s;", var_export($map, true));</code></pre>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-file/edit/master/docs/class-file-locator.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-file/edit/master/docs/book/class-file-locator.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>
