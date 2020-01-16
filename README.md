@@ -4,10 +4,6 @@
 >
 > This repository has moved to laminas/laminas-file.
 
-> ## Repository abandoned 2019-12-31
->
-> This repository has moved to laminas/laminas-file.
-
 [![Build Status](https://secure.travis-ci.org/zendframework/zend-file.svg?branch=master)](https://secure.travis-ci.org/zendframework/zend-file)
 [![Coverage Status](https://coveralls.io/repos/github/zendframework/zend-file/badge.svg?branch=master)](https://coveralls.io/github/zendframework/zend-file?branch=master)
 
